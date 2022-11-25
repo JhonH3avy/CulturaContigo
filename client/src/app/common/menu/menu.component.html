@@ -1,0 +1,26 @@
+<ion-menu contentId="main-content">
+  <ion-content class="ion-padding" color="azultrans" class="azul-transparente">
+    <ion-list [inset]="true" >
+      <ion-item [routerLink]="['/home']" color="primary">
+        <ion-label>Inicio</ion-label>
+      </ion-item>
+      <ion-item [routerLink]="['/coming-soon-activities']" color="primary">
+        <ion-label>Eventos Próximos</ion-label>
+      </ion-item>
+      <ion-item [routerLink]="['/contact']" color="primary">
+        <ion-label>Contacto</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Cultura Contigo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ng-content></ng-content>
+</div>

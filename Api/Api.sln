@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulturaContigo.Api", "CulturaContigo.Api\CulturaContigo.Api.csproj", "{BB9C6883-7806-44D0-B617-7F304CC9877B}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CulturaContigo.Db", "CulturaContigo.Db\CulturaContigo.Db.sqlproj", "{D2261CAF-6EA8-4EEA-981C-0D7C1972A59E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BB9C6883-7806-44D0-B617-7F304CC9877B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB9C6883-7806-44D0-B617-7F304CC9877B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB9C6883-7806-44D0-B617-7F304CC9877B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB9C6883-7806-44D0-B617-7F304CC9877B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2261CAF-6EA8-4EEA-981C-0D7C1972A59E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2261CAF-6EA8-4EEA-981C-0D7C1972A59E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2261CAF-6EA8-4EEA-981C-0D7C1972A59E}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D2261CAF-6EA8-4EEA-981C-0D7C1972A59E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2261CAF-6EA8-4EEA-981C-0D7C1972A59E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2261CAF-6EA8-4EEA-981C-0D7C1972A59E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A31EFC8-653D-4614-968F-5B7F4108D6FD}
+	EndGlobalSection
+EndGlobal

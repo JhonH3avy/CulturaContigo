@@ -1,0 +1,61 @@
+<section class="main-section">
+  <mat-card class="form-wrapper">
+    <mat-card-header>
+      <h1>Crear una actividad</h1>
+    </mat-card-header>
+    <mat-card-content>
+      <form  class="form-group" [formGroup]="activityForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="name">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Detalles</mat-label>
+          <input matInput formControlName="details">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Lugar</mat-label>
+          <input matInput formControlName="place">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Fecha de ocurrencia</mat-label>
+          <input matInput [matDatepicker]="scheduledDatePicker" formControlName="scheduledDate">
+          <mat-datepicker-toggle matIconSuffix [for]="scheduledDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #scheduledDatePicker></mat-datepicker>
+        </mat-form-field>
+
+        <mat-checkbox formControlName="isAllDayLong">¿Es todo el día?</mat-checkbox>
+
+        <mat-form-field appearance="fill" *ngIf="!isAllDayLong.value">
+          <mat-label>Hora de ocurrencia</mat-label>
+          <mat-hint>hh:mm</mat-hint>
+          <input matInput formControlName="scheduledTime">
+        </mat-form-field>
+
+        <mat-checkbox formControlName="hasLimitedCapacity">¿Tiene cupos limitados?</mat-checkbox>
+
+        <mat-form-field appearance="fill" *ngIf="hasLimitedCapacity.value">
+          <mat-label>Cupos</mat-label>
+          <input matInput formControlName="capacity" type="number">
+        </mat-form-field>
+
+        <mat-checkbox formControlName="requiresTicket">¿Tiene costo de entrada?</mat-checkbox>
+
+        <mat-form-field appearance="fill" *ngIf="requiresTicket.value">
+          <mat-label>Precio de la boleta</mat-label>
+          <input matInput formControlName="ticketPrice" type="number">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>URL de imagen</mat-label>
+          <input matInput formControlName="imageUrl" type="url">
+        </mat-form-field>
+
+        <button mat-button type="submit" [disabled]="!activityForm.valid">Crear actividad</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</section>

@@ -1,0 +1,13 @@
+<ion-content>
+  <div id="container">
+    <h1 *ngIf="lateActivities.length !== 0">Eventos proximos</h1>
+    <ion-grid *ngIf="lateActivities.length !== 0">
+      <ion-row>
+        <ion-col size="6" size-md="4" size-lg="2" *ngFor="let activity of lateActivities">
+          <app-activity-card [activity]="activity"></app-activity-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <h1 *ngIf="lateActivities.length === 0">No hay eventos disponibles</h1>
+  </div>
+</ion-content>

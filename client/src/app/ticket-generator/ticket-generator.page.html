@@ -1,0 +1,46 @@
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <h1>Reclama aquí tus boletas</h1>
+    <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()">
+      <ion-list>
+        <ion-item>
+          <ion-label>Tipo de documento de identidad</ion-label>
+          <ion-select formControlName="typeOfId">
+            <ion-select-option value="cc">Cédula de ciudadanía</ion-select-option>
+            <ion-select-option value="ti">Tarjeta de identidad</ion-select-option>
+            <ion-select-option value="ce">Cédula de extrajería</ion-select-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Número de documento de identidad</ion-label>
+          <ion-input formControlName="personalId"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Cantidad de boletas</ion-label>
+          <ion-input formControlName="numberOfTickets"></ion-input>
+          <ion-note slot="error" *ngIf="ticketForm.invalid">Sólo se pueden reclamar un máximo de 5 boletas por documento</ion-note>
+        </ion-item>
+      </ion-list>
+      <ion-button type="submit" [disabled]="ticketForm.invalid">Generar boletas</ion-button>
+    </form>
+  </div>
+  <ion-modal trigger="open-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Generación Existosa</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Aquí está tu código de ticket: #{{ ticket.id }}</ion-label>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

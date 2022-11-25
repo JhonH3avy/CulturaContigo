@@ -1,0 +1,23 @@
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <h1 *ngIf="nowActivities.length !== 0">Eventos de la semana</h1>
+    <ion-grid *ngIf="nowActivities.length !== 0">
+      <ion-row>
+        <ion-col size="6" size-md="4" size-lg="2" *ngFor="let activity of nowActivities">
+          <app-activity-card [activity]="activity"></app-activity-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <h1 *ngIf="nowActivities.length === 0">No hay eventos disponibles para esta semana</h1>
+
+    <h1 *ngIf="soonActivities.length !== 0">Eventos del mes</h1>
+    <ion-grid *ngIf="soonActivities.length !== 0">
+      <ion-row>
+        <ion-col size="6" size-md="4" size-lg="2" *ngFor="let activity of soonActivities">
+          <app-activity-card [activity]="activity"></app-activity-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <h1 *ngIf="soonActivities.length === 0">No hay eventos disponibles para este mes</h1>
+  </div>
+</ion-content>
