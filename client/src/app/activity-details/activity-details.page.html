@@ -1,9 +1,7 @@
 <ion-content [fullscreen]="true">
   <div id="container">
     <div *ngIf="activity" class="center-content">
-      <ion-item color="secondary" [class]="['circle-background','center-content']">
-        <h1>{{ activity.name }}</h1>
-      </ion-item>
+      <h1>{{ activity.name }}</h1>
       <ion-img [src]="activity.imageUrl" alt="Event image"></ion-img>
       <h1 *ngIf="activity.capacity && activity.available && activity.available > 0"><a [routerLink]="['/ticket-generator/', activity.id]">Reclama tus boletas aquí</a></h1>
       <div class="azul">
