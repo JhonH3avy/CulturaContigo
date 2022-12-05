@@ -1,5 +1,4 @@
 ﻿using CulturaContigo.Api.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Dapper;
 using System.Data.SqlClient;
@@ -18,7 +17,6 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpGet("now")]
-    [Produces("application/json")]
     public async Task<IEnumerable<Activity>> GetActivitiesNow([FromQuery] PaginationOptions paginationOptions)
     {
         using var connection = new SqlConnection(_connectionString);
@@ -44,7 +42,6 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpGet("soon")]
-    [Produces("application/json")]
     public async Task<IEnumerable<Activity>> GetActivitiesComingSoon([FromQuery] PaginationOptions paginationOptions)
     {
         using var connection = new SqlConnection(_connectionString);
@@ -70,7 +67,6 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpGet("late")]
-    [Produces("application/json")]
     public async Task<IEnumerable<Activity>> GetActivitiesComingLate([FromQuery] PaginationOptions paginationOptions)
     {
         using var connection = new SqlConnection(_connectionString);
@@ -95,7 +91,6 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpGet("{activityId}")]
-    [Produces("application/json")]
     public async Task<Activity> Get(int activityId)
     {
         using var connection = new SqlConnection(_connectionString);
@@ -104,8 +99,6 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpPost]
-    [Consumes("application/json")]
-    [Produces("application/json")]
     public async Task<Activity> Post([FromBody] ActivityCreateRequest activityCreateRequest)
     {
         using var connection = new SqlConnection(_connectionString);

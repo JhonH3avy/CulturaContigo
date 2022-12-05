@@ -3,9 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulturaContigo.Api", "CulturaContigo.Api\CulturaContigo.Api.csproj", "{BB9C6883-7806-44D0-B617-7F304CC9877B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api", "CulturaContigo.Api\CulturaContigo.Api.csproj", "{BB9C6883-7806-44D0-B617-7F304CC9877B}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CulturaContigo.Db", "CulturaContigo.Db\CulturaContigo.Db.sqlproj", "{D2261CAF-6EA8-4EEA-981C-0D7C1972A59E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{597EF8E2-9FD1-41D3-8696-6726D4D880EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Access", "Access", "{370D434E-AC77-4D9B-83EC-22A80297934F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Access.Activities.Tests", "CulturaContigo.Api.Access.Activities.Tests\CulturaContigo.Api.Access.Activities.Tests.csproj", "{3060A2B9-7A22-4917-978A-13B06B3D0191}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Access.Activities", "CulturaContigo.Api.Access.Activities\CulturaContigo.Api.Access.Activities.csproj", "{4EA71260-11DE-4A20-B673-F9732C6680A0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Access.Activities.Integration.Tests", "CulturaContigo.Api.Access.Activities.Integration.Tests\CulturaContigo.Api.Access.Activities.Integration.Tests.csproj", "{6979A64D-14FE-470D-B1AE-F895338D6DD5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Access.Common", "CulturaContigo.Api.Access.Common\CulturaContigo.Api.Access.Common.csproj", "{F4B032C8-F857-47D1-9855-E5F3436DD2F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{03D66D2D-81AD-4068-AE05-3DC102AF4CF8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulturaContigo.Api.Common.Integration.Tests", "CulturaContigo.Api.Common.Integration.Tests\CulturaContigo.Api.Common.Integration.Tests.csproj", "{A5D6B0E2-B820-444B-917C-9ACC8DAEC0B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,9 +39,36 @@ Global
 		{D2261CAF-6EA8-4EEA-981C-0D7C1972A59E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2261CAF-6EA8-4EEA-981C-0D7C1972A59E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D2261CAF-6EA8-4EEA-981C-0D7C1972A59E}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{3060A2B9-7A22-4917-978A-13B06B3D0191}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3060A2B9-7A22-4917-978A-13B06B3D0191}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3060A2B9-7A22-4917-978A-13B06B3D0191}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3060A2B9-7A22-4917-978A-13B06B3D0191}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EA71260-11DE-4A20-B673-F9732C6680A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EA71260-11DE-4A20-B673-F9732C6680A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EA71260-11DE-4A20-B673-F9732C6680A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EA71260-11DE-4A20-B673-F9732C6680A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6979A64D-14FE-470D-B1AE-F895338D6DD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6979A64D-14FE-470D-B1AE-F895338D6DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6979A64D-14FE-470D-B1AE-F895338D6DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6979A64D-14FE-470D-B1AE-F895338D6DD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4B032C8-F857-47D1-9855-E5F3436DD2F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4B032C8-F857-47D1-9855-E5F3436DD2F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4B032C8-F857-47D1-9855-E5F3436DD2F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4B032C8-F857-47D1-9855-E5F3436DD2F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5D6B0E2-B820-444B-917C-9ACC8DAEC0B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5D6B0E2-B820-444B-917C-9ACC8DAEC0B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5D6B0E2-B820-444B-917C-9ACC8DAEC0B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5D6B0E2-B820-444B-917C-9ACC8DAEC0B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{370D434E-AC77-4D9B-83EC-22A80297934F} = {597EF8E2-9FD1-41D3-8696-6726D4D880EF}
+		{3060A2B9-7A22-4917-978A-13B06B3D0191} = {370D434E-AC77-4D9B-83EC-22A80297934F}
+		{6979A64D-14FE-470D-B1AE-F895338D6DD5} = {370D434E-AC77-4D9B-83EC-22A80297934F}
+		{03D66D2D-81AD-4068-AE05-3DC102AF4CF8} = {597EF8E2-9FD1-41D3-8696-6726D4D880EF}
+		{A5D6B0E2-B820-444B-917C-9ACC8DAEC0B3} = {03D66D2D-81AD-4068-AE05-3DC102AF4CF8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3A31EFC8-653D-4614-968F-5B7F4108D6FD}
