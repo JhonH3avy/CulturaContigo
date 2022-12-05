@@ -1,6 +1,6 @@
 ﻿namespace CulturaContigo.Api.Access.Activities.Contract;
 
-public class Activity
+public record Activity
 {
     public Activity()
     {

@@ -11,7 +11,7 @@ internal class ActivitiesAccess : IActivitiesAccess
 
     public ActivitiesAccess(DatabaseConnectionStringsConfiguration databaseConnectionStringsConfiguration)
     {
-        _connectionString = databaseConnectionStringsConfiguration.CulturaContigo;
+        _connectionString = databaseConnectionStringsConfiguration.CulturaContigo ?? string.Empty;
     }
 
     public async Task<Activity> CreateActivity(ActivityCreateRequest activityCreateRequest)
@@ -31,6 +31,35 @@ internal class ActivitiesAccess : IActivitiesAccess
             SELECT * FROM Activities WHERE Id = @ActivityId
         ",
         parameters);
+        return result;
+    }
+
+    public async Task<IEnumerable<Activity>> GetActivitiesInDateRange(GetActivitiesInDateRangeRequest getActivitiesInDateRangeRequest)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        var parameters = new
+        {
+            SkippedItems = getActivitiesInDateRangeRequest.PaginationOptions.Size * getActivitiesInDateRangeRequest.PaginationOptions.Page,
+            getActivitiesInDateRangeRequest.PaginationOptions.Size,
+            StartDate = getActivitiesInDateRangeRequest.StartDateTime,
+            EndDate = getActivitiesInDateRangeRequest.EndDateTime
+        };
+        var result = await connection.QueryAsync<Activity>(@"
+            SELECT * 
+            FROM Activities 
+            WHERE ScheduledDateTime BETWEEN @StartDate AND @EndDate
+            ORDER BY ScheduledDateTime ASC 
+            OFFSET @SkippedItems ROWS 
+            FETCH NEXT @Size ROWS ONLY
+        ",
+        parameters);
+        return result;
+    }
+
+    public async Task<Activity> GetActivity(int activityId)
+    {
+        using var connection = new SqlConnection(_connectionString);
+        var result = await connection.QuerySingleAsync<Activity>($"SELECT * FROM Activities WHERE Id = {activityId}");
         return result;
     }
 }
