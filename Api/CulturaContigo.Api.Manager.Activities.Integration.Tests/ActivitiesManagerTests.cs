@@ -1,17 +1,17 @@
-using CulturaContigo.Api.Access.Activities.Contract;
+using CulturaContigo.Api.Manager.Activities.Contract;
 
-namespace CulturaContigo.Api.Access.Activities.Integration.Tests;
+namespace CulturaContigo.Api.Manager.Activities.Integration.Tests;
 
-public class ActivitiesAccessTests
+public class ActivitiesManagerTests
 {
-    private IActivitiesAccess _sut;
+    private IActivitiesManager _sut;
     private Mother _mother;
 
     [SetUp]
     public void Setup()
     {
         _mother = new Mother();
-        _sut = _mother.CreateActivitiesAccess();
+        _sut = _mother.CreateActivitiesManager();
     }
 
     [Test]
@@ -53,18 +53,18 @@ public class ActivitiesAccessTests
     [Test]
     public async Task ShouldGetActivitiesInDateRange()
     {
-        var startDate = DateTime.UtcNow;
-        var activity1 = await _mother.CreateActivity();
-        var activity2 = await _mother.CreateActivity();
-        var activity3 = await _mother.CreateActivity();
-        var activity4 = await _mother.CreateActivity();
-        var endDate = DateTime.UtcNow;
-        var expectedActivitiesIds = new[] { activity1.Id, activity2.Id, activity3.Id, activity4.Id };
-        var getActivitiesInDateRangeRequest = _mother.GetActivitiesInDateRangeRequest(startDate, endDate);
+        var startDateTime = DateTime.UtcNow;
+        var expectedActivity1 = await _mother.CreateActivity();
+        var expectedActivity2 = await _mother.CreateActivity();
+        var expectedActivity3 = await _mother.CreateActivity();
+        var expectedActivity4 = await _mother.CreateActivity();
+        var endDateTime = DateTime.UtcNow;
+        var getActivitiesInDateRangeRequest = _mother.GetActivitiesInDateRangeRequest(startDateTime, endDateTime);
+        var expectedActivitriesids = new[] {expectedActivity1.Id, expectedActivity2.Id, expectedActivity3.Id, expectedActivity4.Id}; 
 
-        var actual = await _sut.GetActivitiesInDateRange(getActivitiesInDateRangeRequest);
+        var actual = await _sut.GetActivitiesByDateRange(getActivitiesInDateRangeRequest);
 
         Assert.That(actual, Has.Exactly(4).Items);
-        Assert.That(actual.Select(x => x.Id), Is.EquivalentTo(expectedActivitiesIds));
+        Assert.That(actual.Select(x => x.Id), Is.EqualTo(expectedActivitriesids));
     }
 }

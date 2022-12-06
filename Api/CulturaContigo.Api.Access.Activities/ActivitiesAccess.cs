@@ -17,7 +17,14 @@ internal class ActivitiesAccess : IActivitiesAccess
     public async Task<Activity> CreateActivity(ActivityCreateRequest activityCreateRequest)
     {
         using var connection = new SqlConnection(_connectionString);
-        var parameters = new DynamicParameters(activityCreateRequest);
+        var parameters = new DynamicParameters();
+        parameters.Add("Name", activityCreateRequest.Name);
+        parameters.Add("Details", activityCreateRequest.Details);
+        parameters.Add("ScheduledDateTime", activityCreateRequest.ScheduledDateTime, System.Data.DbType.DateTime2, precision: 7);
+        parameters.Add("Place", activityCreateRequest.Place);
+        parameters.Add("TicketPrice", activityCreateRequest.TicketPrice);
+        parameters.Add("Capacity", activityCreateRequest.Capacity);
+        parameters.Add("ImageUrl", activityCreateRequest.ImageUrl);
         var result = await connection.QuerySingleAsync<Activity>(@"
             DECLARE @ActivitiesIds TABLE (Id INT)
             DECLARE @ActivityId INT
@@ -28,7 +35,17 @@ internal class ActivitiesAccess : IActivitiesAccess
 
             SET @ActivityId = (SELECT TOP 1 Id FROM @ActivitiesIds)
 
-            SELECT * FROM Activities WHERE Id = @ActivityId
+            SELECT 
+                Id,
+                Name, 
+                Details, 
+                ScheduledDateTime, 
+                Place, 
+                TicketPrice, 
+                Capacity, 
+                Available, 
+                ImageUrl
+            FROM Activities WHERE Id = @ActivityId
         ",
         parameters);
         return result;
@@ -45,7 +62,16 @@ internal class ActivitiesAccess : IActivitiesAccess
             EndDate = getActivitiesInDateRangeRequest.EndDateTime
         };
         var result = await connection.QueryAsync<Activity>(@"
-            SELECT * 
+            SELECT 
+                Id,
+                Name, 
+                Details, 
+                ScheduledDateTime, 
+                Place, 
+                TicketPrice, 
+                Capacity, 
+                Available, 
+                ImageUrl
             FROM Activities 
             WHERE ScheduledDateTime BETWEEN @StartDate AND @EndDate
             ORDER BY ScheduledDateTime ASC 
@@ -59,7 +85,23 @@ internal class ActivitiesAccess : IActivitiesAccess
     public async Task<Activity> GetActivity(int activityId)
     {
         using var connection = new SqlConnection(_connectionString);
-        var result = await connection.QuerySingleAsync<Activity>($"SELECT * FROM Activities WHERE Id = {activityId}");
+        var parameters = new
+        {
+            activityId = activityId
+        };
+        var result = await connection.QuerySingleAsync<Activity>(@"
+            SELECT 
+                Id,
+                Name, 
+                Details, 
+                ScheduledDateTime, 
+                Place, 
+                TicketPrice, 
+                Capacity, 
+                Available, 
+                ImageUrl            
+            FROM Activities WHERE Id = @ActivityId",
+            parameters);
         return result;
     }
 }

@@ -1,8 +1,8 @@
-﻿using CulturaContigo.Api.Access.Activities.Contract;
-using CulturaContigo.Api.Common.Integration.Tests.DependencyBuilders;
-using CulturaContigo.Api.Common.Integration.Tests.Mothers.Access;
+﻿using CulturaContigo.Api.Common.Integration.Tests.DependencyBuilders;
+using CulturaContigo.Api.Common.Integration.Tests.Mothers.Manager;
+using CulturaContigo.Api.Manager.Activities.Contract;
 
-namespace CulturaContigo.Api.Access.Activities.Integration.Tests;
+namespace CulturaContigo.Api.Manager.Activities.Integration.Tests;
 
 internal class Mother
 {
@@ -13,24 +13,22 @@ internal class Mother
         _activityMother = new ActivityMother();
     }
 
-    public PaginationOptions PaginationOptions => new()
-    {
-        Page = 0,
-        Size = 10
-    };
-
     public ActivityCreateRequest ActivityCreateRequest => _activityMother.ActivityCreateRequest;
 
     public GetActivitiesInDateRangeRequest GetActivitiesInDateRangeRequest(DateTime startDateTime, DateTime endDateTime) => new()
     {
-        PaginationOptions = PaginationOptions,
+        PaginationOptions = new()
+        {
+            Page = 0,
+            Size = 10
+        },
         StartDateTime = startDateTime,
         EndDateTime = endDateTime
     };
 
-    internal IActivitiesAccess CreateActivitiesAccess()
+    internal IActivitiesManager CreateActivitiesManager()
     {
-        var result = AccessDependencyBuilder.CreateActivitiesAccess();
+        var result = ManagerDependencyBuilder.CreateActivitiesManager();
         return result;
     }
 
