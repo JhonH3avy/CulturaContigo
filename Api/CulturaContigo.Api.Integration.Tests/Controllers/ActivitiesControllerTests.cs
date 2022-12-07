@@ -1,27 +1,27 @@
-using CulturaContigo.Api.Manager.Activities.Contract;
+﻿using CulturaContigo.Api.Controllers;
 
-namespace CulturaContigo.Api.Manager.Activities.Integration.Tests;
+namespace CulturaContigo.Api.Integration.Tests.Controllers;
 
 [TestFixture]
 [Category("Integration")]
-public class ActivitiesManagerTests
+public class ActivitiesControllerTests
 {
-    private IActivitiesManager _sut;
+    private ActivitiesController _sut;
     private Mother _mother;
 
     [SetUp]
-    public void Setup()
+    public void SetUp()
     {
         _mother = new Mother();
-        _sut = _mother.CreateActivitiesManager();
+        _sut = _mother.CreateActivitiesController();
     }
 
     [Test]
-    public async Task ShouldCreateActivity()
+    public async Task ShouldPost()
     {
         var activityCreateRequest = _mother.ActivityCreateRequest;
 
-        var actual = await _sut.CreateActivity(activityCreateRequest);
+        var actual = await _sut.Post(activityCreateRequest);
 
         Assert.That(actual.Id, Is.Not.Zero);
         Assert.That(actual.Name, Is.EqualTo(activityCreateRequest.Name));
@@ -35,11 +35,11 @@ public class ActivitiesManagerTests
     }
 
     [Test]
-    public async Task ShouldGetActivity()
+    public async Task ShouldGet()
     {
         var expectedActivity = await _mother.CreateActivity();
 
-        var actual = await _sut.GetActivity(expectedActivity.Id);
+        var actual = await _sut.Get(expectedActivity.Id);
 
         Assert.That(actual.Id, Is.EqualTo(expectedActivity.Id));
         Assert.That(actual.Name, Is.EqualTo(expectedActivity.Name));
@@ -50,23 +50,5 @@ public class ActivitiesManagerTests
         Assert.That(actual.TicketPrice, Is.EqualTo(expectedActivity.TicketPrice));
         Assert.That(actual.ScheduledDateTime, Is.EqualTo(expectedActivity.ScheduledDateTime));
         Assert.That(actual.Place, Is.EqualTo(expectedActivity.Place));
-    }
-
-    [Test]
-    public async Task ShouldGetActivitiesInDateRange()
-    {
-        var startDateTime = DateTime.UtcNow;
-        var expectedActivity1 = await _mother.CreateActivity();
-        var expectedActivity2 = await _mother.CreateActivity();
-        var expectedActivity3 = await _mother.CreateActivity();
-        var expectedActivity4 = await _mother.CreateActivity();
-        var endDateTime = DateTime.UtcNow;
-        var getActivitiesInDateRangeRequest = _mother.GetActivitiesInDateRangeRequest(startDateTime, endDateTime);
-        var expectedActivitriesids = new[] {expectedActivity1.Id, expectedActivity2.Id, expectedActivity3.Id, expectedActivity4.Id}; 
-
-        var actual = await _sut.GetActivitiesByDateRange(getActivitiesInDateRangeRequest);
-
-        Assert.That(actual, Has.Exactly(4).Items);
-        Assert.That(actual.Select(x => x.Id), Is.EqualTo(expectedActivitriesids));
     }
 }

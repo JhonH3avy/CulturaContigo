@@ -2,6 +2,8 @@ using CulturaContigo.Api.Access.Activities.Contract;
 
 namespace CulturaContigo.Api.Access.Activities.Integration.Tests;
 
+[TestFixture]
+[Category("Integration")]
 public class ActivitiesAccessTests
 {
     private IActivitiesAccess _sut;

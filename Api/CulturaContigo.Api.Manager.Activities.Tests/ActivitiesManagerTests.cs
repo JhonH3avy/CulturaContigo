@@ -5,6 +5,7 @@ using Moq;
 
 namespace CulturaContigo.Api.Manager.Activities.Tests;
 
+[TestFixture]
 public class ActivitiesManagerTests
 {
     private IActivitiesManager _sut;

@@ -11,4 +11,8 @@
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CulturaContigo.Api.Manager.Activities\CulturaContigo.Api.Manager.Activities.csproj" />
+  </ItemGroup>
+
 </Project>

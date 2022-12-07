@@ -3,7 +3,7 @@ using CulturaContigo.Api.Manager.Activities.Contract;
 
 namespace CulturaContigo.Api.Manager.Activities.Mapping;
 
-public class MappingProfile : Profile
+internal class MappingProfile : Profile
 {
 	public MappingProfile()
 	{

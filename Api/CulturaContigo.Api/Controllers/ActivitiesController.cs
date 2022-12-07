@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Dapper;
 using System.Data.SqlClient;
+using CulturaContigo.Api.Manager.Activities.Contract;
+using AutoMapper;
 
 namespace CulturaContigo.Api.Controllers;
 
@@ -10,14 +12,22 @@ namespace CulturaContigo.Api.Controllers;
 public class ActivitiesController : ControllerBase
 {
     private readonly string _connectionString;
+    private readonly IMapper _mapper;
+    private readonly IActivitiesManager _activitiesManager;
 
     public ActivitiesController(IConfiguration configuration)
     {
         _connectionString = configuration.GetConnectionString("CulturaContigo.Db") ?? string.Empty;
     }
 
+    public ActivitiesController(IMapper mapper, IActivitiesManager activitiesManager)
+    {
+        _mapper = mapper;
+        _activitiesManager = activitiesManager;
+    }
+
     [HttpGet("now")]
-    public async Task<IEnumerable<Activity>> GetActivitiesNow([FromQuery] PaginationOptions paginationOptions)
+    public async Task<IEnumerable<Models.Activity>> GetActivitiesNow([FromQuery] Models.PaginationOptions paginationOptions)
     {
         using var connection = new SqlConnection(_connectionString);
         var now = DateTime.UtcNow;
@@ -29,7 +39,7 @@ public class ActivitiesController : ControllerBase
             Now = now,
             AWeekLater = aWeekLater
         };
-        var result = await connection.QueryAsync<Activity>(@"
+        var result = await connection.QueryAsync<Models.Activity>(@"
             SELECT * 
             FROM Activities 
             WHERE ScheduledDateTime BETWEEN @Now AND @AWeekLater
@@ -42,7 +52,7 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpGet("soon")]
-    public async Task<IEnumerable<Activity>> GetActivitiesComingSoon([FromQuery] PaginationOptions paginationOptions)
+    public async Task<IEnumerable<Models.Activity>> GetActivitiesComingSoon([FromQuery] Models.PaginationOptions paginationOptions)
     {
         using var connection = new SqlConnection(_connectionString);
         var aWeekLater = DateTime.UtcNow.AddDays(7);
@@ -54,7 +64,7 @@ public class ActivitiesController : ControllerBase
             AWeekLater = aWeekLater,
             AMonthLater = aMonthLater
         };
-        var result = await connection.QueryAsync<Activity>(@"
+        var result = await connection.QueryAsync<Models.Activity>(@"
             SELECT * 
             FROM Activities 
             WHERE ScheduledDateTime BETWEEN @AWeekLater AND @AMonthLater
@@ -67,7 +77,7 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpGet("late")]
-    public async Task<IEnumerable<Activity>> GetActivitiesComingLate([FromQuery] PaginationOptions paginationOptions)
+    public async Task<IEnumerable<Models.Activity>> GetActivitiesComingLate([FromQuery] Models.PaginationOptions paginationOptions)
     {
         using var connection = new SqlConnection(_connectionString);
         var now = DateTime.UtcNow;
@@ -78,7 +88,7 @@ public class ActivitiesController : ControllerBase
             paginationOptions.Size,
             AMonthLater = aMonthLater
         };
-        var result = await connection.QueryAsync<Activity>(@"
+        var result = await connection.QueryAsync<Models.Activity>(@"
             SELECT * 
             FROM Activities 
             WHERE ScheduledDateTime > @AMonthLater
@@ -91,31 +101,19 @@ public class ActivitiesController : ControllerBase
     }
 
     [HttpGet("{activityId}")]
-    public async Task<Activity> Get(int activityId)
+    public async Task<Models.Activity> Get(int activityId)
     {
         using var connection = new SqlConnection(_connectionString);
-        var result = await connection.QuerySingleAsync<Activity>($"SELECT * FROM Activities WHERE Id = {activityId}");
+        var result = await connection.QuerySingleAsync<Models.Activity>($"SELECT * FROM Activities WHERE Id = {activityId}");
         return result;
     }
 
     [HttpPost]
-    public async Task<Activity> Post([FromBody] ActivityCreateRequest activityCreateRequest)
+    public async Task<Models.Activity> Post([FromBody] Models.ActivityCreateRequest activityCreateRequest)
     {
-        using var connection = new SqlConnection(_connectionString);
-        var parameters = new DynamicParameters(activityCreateRequest);
-        var result = await connection.QuerySingleAsync<Activity>(@"
-            DECLARE @ActivitiesIds TABLE (Id INT)
-            DECLARE @ActivityId INT
-
-            INSERT INTO Activities(Name, Details, ScheduledDateTime, Place, TicketPrice, Capacity, Available, ImageUrl)
-            OUTPUT INSERTED.Id INTO @ActivitiesIds
-            VALUES (@Name, @Details, @ScheduledDateTime, @Place, @TicketPrice, @Capacity, @Capacity, @ImageUrl)
-
-            SET @ActivityId = (SELECT TOP 1 Id FROM @ActivitiesIds)
-
-            SELECT * FROM Activities WHERE Id = @ActivityId
-        ",
-        parameters);
+        var managerActivityCreateRequest = _mapper.Map<Manager.Activities.Contract.ActivityCreateRequest>(activityCreateRequest);
+        var managerActivity = await _activitiesManager.CreateActivity(managerActivityCreateRequest);
+        var result = _mapper.Map<Models.Activity>(managerActivity);
         return result;
     }
 }

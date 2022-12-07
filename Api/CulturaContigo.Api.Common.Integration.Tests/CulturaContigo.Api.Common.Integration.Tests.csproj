@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\CulturaContigo.Api.Access.Activities\CulturaContigo.Api.Access.Activities.csproj" />
     <ProjectReference Include="..\CulturaContigo.Api.Manager.Activities\CulturaContigo.Api.Manager.Activities.csproj" />
+    <ProjectReference Include="..\CulturaContigo.Api\CulturaContigo.Api.csproj" />
   </ItemGroup>
 
 </Project>

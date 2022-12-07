@@ -17,19 +17,25 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Access.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Access.Activities.Integration.Tests", "CulturaContigo.Api.Access.Activities.Integration.Tests\CulturaContigo.Api.Access.Activities.Integration.Tests.csproj", "{6979A64D-14FE-470D-B1AE-F895338D6DD5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Access.Common", "CulturaContigo.Api.Access.Common\CulturaContigo.Api.Access.Common.csproj", "{F4B032C8-F857-47D1-9855-E5F3436DD2F2}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{03D66D2D-81AD-4068-AE05-3DC102AF4CF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulturaContigo.Api.Common.Integration.Tests", "CulturaContigo.Api.Common.Integration.Tests\CulturaContigo.Api.Common.Integration.Tests.csproj", "{A5D6B0E2-B820-444B-917C-9ACC8DAEC0B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Common.Integration.Tests", "CulturaContigo.Api.Common.Integration.Tests\CulturaContigo.Api.Common.Integration.Tests.csproj", "{A5D6B0E2-B820-444B-917C-9ACC8DAEC0B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Managers", "Managers", "{80247CDA-4E9F-4464-A434-E997936BC327}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulturaContigo.Api.Manager.Activities.Tests", "CulturaContigo.Api.Manager.Activities.Tests\CulturaContigo.Api.Manager.Activities.Tests.csproj", "{94D1023D-C203-4D5D-A949-16C4D7EA3A55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Manager.Activities.Tests", "CulturaContigo.Api.Manager.Activities.Tests\CulturaContigo.Api.Manager.Activities.Tests.csproj", "{94D1023D-C203-4D5D-A949-16C4D7EA3A55}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulturaContigo.Api.Manager.Activities", "CulturaContigo.Api.Manager.Activities\CulturaContigo.Api.Manager.Activities.csproj", "{F32CF916-44A7-4A73-A4CE-26D582E1D446}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Manager.Activities", "CulturaContigo.Api.Manager.Activities\CulturaContigo.Api.Manager.Activities.csproj", "{F32CF916-44A7-4A73-A4CE-26D582E1D446}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulturaContigo.Api.Manager.Activities.Integration.Tests", "CulturaContigo.Api.Manager.Activities.Integration.Tests\CulturaContigo.Api.Manager.Activities.Integration.Tests.csproj", "{B61FD067-6999-4A9A-B57D-9FB1D08D9CCC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Manager.Activities.Integration.Tests", "CulturaContigo.Api.Manager.Activities.Integration.Tests\CulturaContigo.Api.Manager.Activities.Integration.Tests.csproj", "{B61FD067-6999-4A9A-B57D-9FB1D08D9CCC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{76F301A2-C95E-41D9-91FD-EF4A9F278319}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Tests", "CulturaContigo.Api.Tests\CulturaContigo.Api.Tests.csproj", "{315B6B91-822D-4BA0-AE6F-438771DFE1BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CulturaContigo.Api.Access.Common", "CulturaContigo.Api.Access.Common\CulturaContigo.Api.Access.Common.csproj", "{27FD6074-660A-4B60-992D-23DE9E869B0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CulturaContigo.Api.Integration.Tests", "CulturaContigo.Api.Integration.Tests\CulturaContigo.Api.Integration.Tests.csproj", "{31D51BFF-5D99-4CF9-99C0-FE5020778B33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +65,6 @@ Global
 		{6979A64D-14FE-470D-B1AE-F895338D6DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6979A64D-14FE-470D-B1AE-F895338D6DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6979A64D-14FE-470D-B1AE-F895338D6DD5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F4B032C8-F857-47D1-9855-E5F3436DD2F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F4B032C8-F857-47D1-9855-E5F3436DD2F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F4B032C8-F857-47D1-9855-E5F3436DD2F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F4B032C8-F857-47D1-9855-E5F3436DD2F2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A5D6B0E2-B820-444B-917C-9ACC8DAEC0B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A5D6B0E2-B820-444B-917C-9ACC8DAEC0B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5D6B0E2-B820-444B-917C-9ACC8DAEC0B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -79,6 +81,18 @@ Global
 		{B61FD067-6999-4A9A-B57D-9FB1D08D9CCC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B61FD067-6999-4A9A-B57D-9FB1D08D9CCC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B61FD067-6999-4A9A-B57D-9FB1D08D9CCC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{315B6B91-822D-4BA0-AE6F-438771DFE1BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{315B6B91-822D-4BA0-AE6F-438771DFE1BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{315B6B91-822D-4BA0-AE6F-438771DFE1BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{315B6B91-822D-4BA0-AE6F-438771DFE1BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27FD6074-660A-4B60-992D-23DE9E869B0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27FD6074-660A-4B60-992D-23DE9E869B0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27FD6074-660A-4B60-992D-23DE9E869B0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27FD6074-660A-4B60-992D-23DE9E869B0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31D51BFF-5D99-4CF9-99C0-FE5020778B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31D51BFF-5D99-4CF9-99C0-FE5020778B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31D51BFF-5D99-4CF9-99C0-FE5020778B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31D51BFF-5D99-4CF9-99C0-FE5020778B33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -92,6 +106,9 @@ Global
 		{80247CDA-4E9F-4464-A434-E997936BC327} = {597EF8E2-9FD1-41D3-8696-6726D4D880EF}
 		{94D1023D-C203-4D5D-A949-16C4D7EA3A55} = {80247CDA-4E9F-4464-A434-E997936BC327}
 		{B61FD067-6999-4A9A-B57D-9FB1D08D9CCC} = {80247CDA-4E9F-4464-A434-E997936BC327}
+		{76F301A2-C95E-41D9-91FD-EF4A9F278319} = {597EF8E2-9FD1-41D3-8696-6726D4D880EF}
+		{315B6B91-822D-4BA0-AE6F-438771DFE1BC} = {76F301A2-C95E-41D9-91FD-EF4A9F278319}
+		{31D51BFF-5D99-4CF9-99C0-FE5020778B33} = {76F301A2-C95E-41D9-91FD-EF4A9F278319}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3A31EFC8-653D-4614-968F-5B7F4108D6FD}
