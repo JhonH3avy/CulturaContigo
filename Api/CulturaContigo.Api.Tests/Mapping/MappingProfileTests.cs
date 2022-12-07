@@ -54,4 +54,18 @@ internal class MappingProfileTests
 
         });
     }
+
+    [Test]
+    public void ShouldMapModelPaginationOptionsToManagerPaginationOptions()
+    {
+        var request = _mother.ModelPaginationOptions;
+
+        var actual = _sut.Map<Manager.Activities.Contract.PaginationOptions>(request);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Page, Is.EqualTo(request.Page));
+            Assert.That(actual.Size, Is.EqualTo(request.Size));
+        });
+    }
 }

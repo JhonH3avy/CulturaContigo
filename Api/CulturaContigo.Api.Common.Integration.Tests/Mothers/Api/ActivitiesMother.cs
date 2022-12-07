@@ -19,10 +19,11 @@ internal class ActivitiesMother
         TicketPrice = 10_000m
     };
 
-    public async Task<Activity> CreateActivity()
+    public async Task<Activity> CreateActivity(ActivityCreateRequest? activityCreateRequest = null)
     {
         var activitiesController = CreateActivitiesController();
-        var result = await activitiesController.Post(ActivityCreateRequest);
+        var request = activityCreateRequest == null ? ActivityCreateRequest : activityCreateRequest;
+        var result = await activitiesController.Post(request);
         return result;
     }
 

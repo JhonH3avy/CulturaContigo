@@ -29,74 +29,45 @@ public class ActivitiesController : ControllerBase
     [HttpGet("now")]
     public async Task<IEnumerable<Models.Activity>> GetActivitiesNow([FromQuery] Models.PaginationOptions paginationOptions)
     {
-        using var connection = new SqlConnection(_connectionString);
-        var now = DateTime.UtcNow;
-        var aWeekLater = DateTime.UtcNow.AddDays(7);
-        var parameters = new
+        var managerPaginationOptions = _mapper.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions);
+        var getActivitiesInDateRateRequest = new GetActivitiesInDateRangeRequest
         {
-            SkippedItems = paginationOptions.Size * paginationOptions.Page,
-            paginationOptions.Size,
-            Now = now,
-            AWeekLater = aWeekLater
+            PaginationOptions = managerPaginationOptions,
+            StartDateTime = DateTime.UtcNow,
+            EndDateTime = DateTime.UtcNow.AddDays(7)
         };
-        var result = await connection.QueryAsync<Models.Activity>(@"
-            SELECT * 
-            FROM Activities 
-            WHERE ScheduledDateTime BETWEEN @Now AND @AWeekLater
-            ORDER BY ScheduledDateTime ASC 
-            OFFSET @SkippedItems ROWS 
-            FETCH NEXT @Size ROWS ONLY
-        ",
-        parameters);
+        var managerActivities = await _activitiesManager.GetActivitiesByDateRange(getActivitiesInDateRateRequest);
+        var result = _mapper.Map<IEnumerable<Models.Activity>>(managerActivities);
         return result;
     }
 
     [HttpGet("soon")]
     public async Task<IEnumerable<Models.Activity>> GetActivitiesComingSoon([FromQuery] Models.PaginationOptions paginationOptions)
     {
-        using var connection = new SqlConnection(_connectionString);
-        var aWeekLater = DateTime.UtcNow.AddDays(7);
-        var aMonthLater = DateTime.UtcNow.AddDays(30);
-        var parameters = new
+        var managerPaginationOptions = _mapper.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions);
+        var getActivitiesInDateRateRequest = new GetActivitiesInDateRangeRequest
         {
-            SkippedItems = paginationOptions.Size * paginationOptions.Page,
-            paginationOptions.Size,
-            AWeekLater = aWeekLater,
-            AMonthLater = aMonthLater
+            PaginationOptions = managerPaginationOptions,
+            StartDateTime = DateTime.UtcNow.AddMonths(1),
+            EndDateTime = DateTime.UtcNow.AddYears(1)
         };
-        var result = await connection.QueryAsync<Models.Activity>(@"
-            SELECT * 
-            FROM Activities 
-            WHERE ScheduledDateTime BETWEEN @AWeekLater AND @AMonthLater
-            ORDER BY ScheduledDateTime ASC 
-            OFFSET @SkippedItems ROWS 
-            FETCH NEXT @Size ROWS ONLY
-        ",
-        parameters);
+        var managerActivities = await _activitiesManager.GetActivitiesByDateRange(getActivitiesInDateRateRequest);
+        var result = _mapper.Map<IEnumerable<Models.Activity>>(managerActivities);
         return result;
     }
 
     [HttpGet("late")]
     public async Task<IEnumerable<Models.Activity>> GetActivitiesComingLate([FromQuery] Models.PaginationOptions paginationOptions)
     {
-        using var connection = new SqlConnection(_connectionString);
-        var now = DateTime.UtcNow;
-        var aMonthLater = DateTime.UtcNow.AddDays(30);
-        var parameters = new
+        var managerPaginationOptions = _mapper.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions);
+        var getActivitiesInDateRateRequest = new GetActivitiesInDateRangeRequest
         {
-            SkippedItems = paginationOptions.Size * paginationOptions.Page,
-            paginationOptions.Size,
-            AMonthLater = aMonthLater
+            PaginationOptions = managerPaginationOptions,
+            StartDateTime = DateTime.UtcNow.AddDays(7),
+            EndDateTime = DateTime.UtcNow.AddMonths(1)
         };
-        var result = await connection.QueryAsync<Models.Activity>(@"
-            SELECT * 
-            FROM Activities 
-            WHERE ScheduledDateTime > @AMonthLater
-            ORDER BY ScheduledDateTime ASC 
-            OFFSET @SkippedItems ROWS 
-            FETCH NEXT @Size ROWS ONLY
-        ",
-        parameters);
+        var managerActivities = await _activitiesManager.GetActivitiesByDateRange(getActivitiesInDateRateRequest);
+        var result = _mapper.Map<IEnumerable<Models.Activity>>(managerActivities);
         return result;
     }
 

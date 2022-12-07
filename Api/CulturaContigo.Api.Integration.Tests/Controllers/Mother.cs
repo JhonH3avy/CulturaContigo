@@ -15,15 +15,21 @@ internal class Mother
 
     public ActivityCreateRequest ActivityCreateRequest => _activitiesMother.ActivityCreateRequest;
 
+    public PaginationOptions PaginationOptions => new()
+    {
+        Page = 0,
+        Size = 100
+    };
+
     internal ActivitiesController CreateActivitiesController()
     {
         var result = _activitiesMother.CreateActivitiesController();
         return result;
     }
 
-    internal async Task<Activity> CreateActivity()
+    internal async Task<Activity> CreateActivity(ActivityCreateRequest? activityCreateRequest = null)
     {
-        var result = await _activitiesMother.CreateActivity();
+        var result = await _activitiesMother.CreateActivity(activityCreateRequest);
         return result;
     }
 }

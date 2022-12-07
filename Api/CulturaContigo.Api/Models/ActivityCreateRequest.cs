@@ -2,7 +2,7 @@
 
 namespace CulturaContigo.Api.Models;
 
-public class ActivityCreateRequest
+public record ActivityCreateRequest
 {
     [Required] 
     public string? Name { get; set; }

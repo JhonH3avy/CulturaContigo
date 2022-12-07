@@ -51,4 +51,61 @@ public class ActivitiesControllerTests
         Assert.That(actual.ScheduledDateTime, Is.EqualTo(expectedActivity.ScheduledDateTime));
         Assert.That(actual.Place, Is.EqualTo(expectedActivity.Place));
     }
+
+    [Test]
+    public async Task ShouldGetActivitiesNow()
+    {
+        var activityCreateRequest = _mother.ActivityCreateRequest with
+        {
+            ScheduledDateTime = DateTime.UtcNow.AddDays(3),
+        };
+        var expectedActivity1 = await _mother.CreateActivity(activityCreateRequest);
+        var expectedActivity2 = await _mother.CreateActivity(activityCreateRequest);
+        var expectedActivity3 = await _mother.CreateActivity(activityCreateRequest);
+        var expectedActivity4 = await _mother.CreateActivity(activityCreateRequest);
+        var paginationOptions = _mother.PaginationOptions;
+        var expectedActivitiesIds = new[] {expectedActivity1.Id, expectedActivity2.Id, expectedActivity3.Id, expectedActivity4.Id};
+
+        var actual = await _sut.GetActivitiesNow(paginationOptions);
+
+        Assert.That(actual.Select(x => x.Id), Is.SupersetOf(expectedActivitiesIds));
+    }
+
+    [Test]
+    public async Task ShouldGetActivitiesComingLate()
+    {
+        var activityCreateRequest = _mother.ActivityCreateRequest with
+        {
+            ScheduledDateTime = DateTime.UtcNow.AddDays(15),
+        };
+        var expectedActivity1 = await _mother.CreateActivity(activityCreateRequest);
+        var expectedActivity2 = await _mother.CreateActivity(activityCreateRequest);
+        var expectedActivity3 = await _mother.CreateActivity(activityCreateRequest);
+        var expectedActivity4 = await _mother.CreateActivity(activityCreateRequest);
+        var paginationOptions = _mother.PaginationOptions;
+        var expectedActivitiesIds = new[] { expectedActivity1.Id, expectedActivity2.Id, expectedActivity3.Id, expectedActivity4.Id };
+
+        var actual = await _sut.GetActivitiesComingLate(paginationOptions);
+
+        Assert.That(actual.Select(x => x.Id), Is.SupersetOf(expectedActivitiesIds));
+    }
+
+    [Test]
+    public async Task ShouldGetActivitiesComingSoon()
+    {
+        var activityCreateRequest = _mother.ActivityCreateRequest with
+        {
+            ScheduledDateTime = DateTime.UtcNow.AddMonths(3),
+        };
+        var expectedActivity1 = await _mother.CreateActivity(activityCreateRequest);
+        var expectedActivity2 = await _mother.CreateActivity(activityCreateRequest);
+        var expectedActivity3 = await _mother.CreateActivity(activityCreateRequest);
+        var expectedActivity4 = await _mother.CreateActivity(activityCreateRequest);
+        var paginationOptions = _mother.PaginationOptions;
+        var expectedActivitiesIds = new[] { expectedActivity1.Id, expectedActivity2.Id, expectedActivity3.Id, expectedActivity4.Id };
+
+        var actual = await _sut.GetActivitiesComingSoon(paginationOptions);
+
+        Assert.That(actual.Select(x => x.Id), Is.SupersetOf(expectedActivitiesIds));
+    }
 }

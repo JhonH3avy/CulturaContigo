@@ -67,4 +67,94 @@ internal class ActivitiesControllerTests
 
         _mockRepository.VerifyAll();
     }
+
+    [Test]
+    public async Task ShouldGetActivitiesNow()
+    {
+        var startDateTime = DateTime.UtcNow;
+        var endDateTime = DateTime.UtcNow.AddDays(7);
+        var paginationOptions = new Models.PaginationOptions();
+        var managerPaginationOptions = new PaginationOptions();
+        var managerActivities = new[] { new Manager.Activities.Contract.Activity { Id = 1 } };
+        var expectedActivities = new[] { new Models.Activity { Id = 1 } };
+
+        _mapper
+            .Setup(x => x.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions))
+            .Returns(() => managerPaginationOptions);
+        _activitiesManager
+            .Setup(x => x.GetActivitiesByDateRange(It.Is<GetActivitiesInDateRangeRequest>(request => 
+            request.PaginationOptions == managerPaginationOptions &&
+            (request.StartDateTime - startDateTime).Duration().Seconds < 1 &&
+            (request.EndDateTime - endDateTime).Duration().Seconds < 1)))
+            .ReturnsAsync(managerActivities);
+        _mapper
+            .Setup(x => x.Map<IEnumerable<Models.Activity>>(managerActivities))
+            .Returns(expectedActivities);
+
+        var actual = await _sut.GetActivitiesNow(paginationOptions);
+
+        Assert.That(actual, Is.EqualTo(expectedActivities));
+
+        _mockRepository.VerifyAll();
+    }
+
+    [Test]
+    public async Task ShouldGetActivitiesComingLate()
+    {
+        var startDateTime = DateTime.UtcNow.AddDays(7);
+        var endDateTime = DateTime.UtcNow.AddMonths(1);
+        var paginationOptions = new Models.PaginationOptions();
+        var managerPaginationOptions = new PaginationOptions();
+        var managerActivities = new[] { new Manager.Activities.Contract.Activity { Id = 1 } };
+        var expectedActivities = new[] { new Models.Activity { Id = 1 } };
+
+        _mapper
+            .Setup(x => x.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions))
+            .Returns(() => managerPaginationOptions);
+        _activitiesManager
+            .Setup(x => x.GetActivitiesByDateRange(It.Is<GetActivitiesInDateRangeRequest>(request =>
+            request.PaginationOptions == managerPaginationOptions &&
+            (request.StartDateTime - startDateTime).Duration().Seconds < 1 &&
+            (request.EndDateTime - endDateTime).Duration().Seconds < 1)))
+            .ReturnsAsync(managerActivities);
+        _mapper
+            .Setup(x => x.Map<IEnumerable<Models.Activity>>(managerActivities))
+            .Returns(expectedActivities);
+
+        var actual = await _sut.GetActivitiesComingLate(paginationOptions);
+
+        Assert.That(actual, Is.EqualTo(expectedActivities));
+
+        _mockRepository.VerifyAll();
+    }
+
+    [Test]
+    public async Task ShouldGetActivitiesComingSoon()
+    {
+        var startDateTime = DateTime.UtcNow.AddMonths(1);
+        var endDateTime = DateTime.UtcNow.AddYears(1);
+        var paginationOptions = new Models.PaginationOptions();
+        var managerPaginationOptions = new PaginationOptions();
+        var managerActivities = new[] { new Manager.Activities.Contract.Activity { Id = 1 } };
+        var expectedActivities = new[] { new Models.Activity { Id = 1 } };
+
+        _mapper
+            .Setup(x => x.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions))
+            .Returns(() => managerPaginationOptions);
+        _activitiesManager
+            .Setup(x => x.GetActivitiesByDateRange(It.Is<GetActivitiesInDateRangeRequest>(request =>
+            request.PaginationOptions == managerPaginationOptions &&
+            (request.StartDateTime - startDateTime).Duration().Seconds < 1 &&
+            (request.EndDateTime - endDateTime).Duration().Seconds < 1)))
+            .ReturnsAsync(managerActivities);
+        _mapper
+            .Setup(x => x.Map<IEnumerable<Models.Activity>>(managerActivities))
+            .Returns(expectedActivities);
+
+        var actual = await _sut.GetActivitiesComingSoon(paginationOptions);
+
+        Assert.That(actual, Is.EqualTo(expectedActivities));
+
+        _mockRepository.VerifyAll();
+    }
 }

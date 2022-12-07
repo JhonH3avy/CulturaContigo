@@ -2,7 +2,7 @@
 
 namespace CulturaContigo.Api.Models;
 
-public class TicketCreateRequest
+public record TicketCreateRequest
 {
     [Required]
     public int ActivityId { get; set; }
