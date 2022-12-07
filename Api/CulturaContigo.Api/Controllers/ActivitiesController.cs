@@ -103,8 +103,8 @@ public class ActivitiesController : ControllerBase
     [HttpGet("{activityId}")]
     public async Task<Models.Activity> Get(int activityId)
     {
-        using var connection = new SqlConnection(_connectionString);
-        var result = await connection.QuerySingleAsync<Models.Activity>($"SELECT * FROM Activities WHERE Id = {activityId}");
+        var managerActivity = await _activitiesManager.GetActivity(activityId);
+        var result = _mapper.Map<Models.Activity>(managerActivity);
         return result;
     }
 
