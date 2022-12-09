@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using CulturaContigo.Api.Controllers;
 using CulturaContigo.Api.Manager.Activities.Contract;
-using Moq;
 
 namespace CulturaContigo.Api.Tests.Controllers;
 
