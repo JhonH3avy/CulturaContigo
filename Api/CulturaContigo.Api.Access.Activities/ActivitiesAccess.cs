@@ -54,13 +54,11 @@ internal class ActivitiesAccess : IActivitiesAccess
     public async Task<IEnumerable<Activity>> GetActivitiesInDateRange(GetActivitiesInDateRangeRequest getActivitiesInDateRangeRequest)
     {
         using var connection = new SqlConnection(_connectionString);
-        var parameters = new
-        {
-            SkippedItems = getActivitiesInDateRangeRequest.PaginationOptions.Size * getActivitiesInDateRangeRequest.PaginationOptions.Page,
-            getActivitiesInDateRangeRequest.PaginationOptions.Size,
-            StartDate = getActivitiesInDateRangeRequest.StartDateTime,
-            EndDate = getActivitiesInDateRangeRequest.EndDateTime
-        };
+        var parameters = new DynamicParameters();
+        parameters.Add("SkippedItems", getActivitiesInDateRangeRequest.PaginationOptions.Size * getActivitiesInDateRangeRequest.PaginationOptions.Page);
+        parameters.Add("Size", getActivitiesInDateRangeRequest.PaginationOptions.Size);
+        parameters.Add("StartDate", getActivitiesInDateRangeRequest.StartDateTime, System.Data.DbType.DateTime2, precision: 7);
+        parameters.Add("EndDate", getActivitiesInDateRangeRequest.EndDateTime, System.Data.DbType.DateTime2, precision: 7);
         var result = await connection.QueryAsync<Activity>(@"
             SELECT 
                 Id,
