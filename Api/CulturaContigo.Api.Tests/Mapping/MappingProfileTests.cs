@@ -56,6 +56,46 @@ internal class MappingProfileTests
     }
 
     [Test]
+    public void ShouldMapModelActivityCreateRequestToAdministrationManagerActivityCreateRequest()
+    {
+        var request = _mother.ModelActivityCreateRequest;
+
+        var actual = _sut.Map<Manager.Activities.Administration.Contract.ActivityCreateRequest>(request);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Name, Is.EqualTo(request.Name));
+            Assert.That(actual.Details, Is.EqualTo(request.Details));
+            Assert.That(actual.ScheduledDateTime, Is.EqualTo(request.ScheduledDateTime));
+            Assert.That(actual.Place, Is.EqualTo(request.Place));
+            Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
+            Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
+            Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
+        });
+    }
+
+    [Test]
+    public void ShouldMapAdministrationManagerActivityToModelActivity()
+    {
+        var request = _mother.AdministrationManagerActivity;
+
+        var actual = _sut.Map<Models.Activity>(request);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Id, Is.EqualTo(request.Id));
+            Assert.That(actual.Name, Is.EqualTo(request.Name));
+            Assert.That(actual.Details, Is.EqualTo(request.Details));
+            Assert.That(actual.ScheduledDateTime, Is.EqualTo(request.ScheduledDateTime));
+            Assert.That(actual.Place, Is.EqualTo(request.Place));
+            Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
+            Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
+            Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
+
+        });
+    }
+
+    [Test]
     public void ShouldMapModelPaginationOptionsToManagerPaginationOptions()
     {
         var request = _mother.ModelPaginationOptions;

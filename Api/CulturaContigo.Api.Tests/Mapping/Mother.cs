@@ -34,6 +34,18 @@ internal class Mother
         Size = 100
     };
 
+    public Manager.Activities.Administration.Contract.Activity AdministrationManagerActivity => new()
+    {
+        Id = 100,
+        Name = "name",
+        Details = "details",
+        Capacity = 100,
+        Place = "place",
+        ImageUrl = "imageurl",
+        ScheduledDateTime = DateTime.Now,
+        TicketPrice = 10_000m
+    };
+
     internal IMapper CreateMapper()
     {
         var configurationExpression = new MapperConfigurationExpression();

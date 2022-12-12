@@ -1,7 +1,4 @@
-﻿using CulturaContigo.Api.Models;
-using Microsoft.AspNetCore.Mvc;
-using Dapper;
-using System.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Mvc;
 using CulturaContigo.Api.Manager.Activities.Contract;
 using AutoMapper;
 
@@ -11,14 +8,8 @@ namespace CulturaContigo.Api.Controllers;
 [ApiController]
 public class ActivitiesController : ControllerBase
 {
-    private readonly string _connectionString;
     private readonly IMapper _mapper;
     private readonly IActivitiesManager _activitiesManager;
-
-    public ActivitiesController(IConfiguration configuration)
-    {
-        _connectionString = configuration.GetConnectionString("CulturaContigo.Db") ?? string.Empty;
-    }
 
     public ActivitiesController(IMapper mapper, IActivitiesManager activitiesManager)
     {

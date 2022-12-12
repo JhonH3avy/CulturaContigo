@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CulturaContigo.Api.Manager.Activities.Administration\CulturaContigo.Api.Manager.Activities.Administration.csproj" />
     <ProjectReference Include="..\CulturaContigo.Api.Manager.Activities\CulturaContigo.Api.Manager.Activities.csproj" />
   </ItemGroup>
 

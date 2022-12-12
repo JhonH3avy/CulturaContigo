@@ -9,10 +9,15 @@ public class ActivitiesControllerTests
     private ActivitiesController _sut;
     private Mother _mother;
 
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {
+        _mother = new Mother();
+    }
+
     [SetUp]
     public void SetUp()
     {
-        _mother = new Mother();
         _sut = _mother.CreateActivitiesController();
     }
 

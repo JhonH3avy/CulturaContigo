@@ -10,6 +10,10 @@ internal class MappingProfile : Profile
 
 		CreateMap<Manager.Activities.Contract.Activity, Models.Activity>();
 
-		CreateMap<Models.PaginationOptions, Manager.Activities.Contract.PaginationOptions>();
+        CreateMap<Models.ActivityCreateRequest, Manager.Activities.Administration.Contract.ActivityCreateRequest>();
+
+        CreateMap<Manager.Activities.Administration.Contract.Activity, Models.Activity>();
+
+        CreateMap<Models.PaginationOptions, Manager.Activities.Contract.PaginationOptions>();
 	}
 }
