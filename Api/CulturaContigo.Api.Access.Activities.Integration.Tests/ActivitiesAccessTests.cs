@@ -9,10 +9,15 @@ public class ActivitiesAccessTests
     private IActivitiesAccess _sut;
     private Mother _mother;
 
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {
+        _mother = new Mother();
+    }
+
     [SetUp]
     public void Setup()
     {
-        _mother = new Mother();
         _sut = _mother.CreateActivitiesAccess();
     }
 
