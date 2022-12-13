@@ -1,4 +1,4 @@
-﻿namespace CulturaContigo.Api.Access.Ticket.Contract;
+﻿namespace CulturaContigo.Api.Manager.Ticket.Contract;
 
 public record TicketCreateRequest
 {

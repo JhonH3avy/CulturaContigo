@@ -1,13 +1,14 @@
-﻿namespace CulturaContigo.Api.Access.Ticket.Contract;
+﻿namespace CulturaContigo.Api.Manager.Ticket.Contract;
 
-public record TicketCreateRequest
+public record Ticket
 {
-    public TicketCreateRequest()
+    public Ticket()
     {
         TypeOfId = string.Empty;
         PersonalId = string.Empty;
     }
 
+    public int Id { get; set; }
     public int ActivityId { get; set; }
     public string TypeOfId { get; set; }
     public string PersonalId { get; set; }

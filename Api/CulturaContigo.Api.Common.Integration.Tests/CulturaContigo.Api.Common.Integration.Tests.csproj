@@ -26,6 +26,7 @@
     <ProjectReference Include="..\CulturaContigo.Api.Access.Ticket\CulturaContigo.Api.Access.Ticket.csproj" />
     <ProjectReference Include="..\CulturaContigo.Api.Manager.Activities.Administration\CulturaContigo.Api.Manager.Activities.Administration.csproj" />
     <ProjectReference Include="..\CulturaContigo.Api.Manager.Activities\CulturaContigo.Api.Manager.Activities.csproj" />
+    <ProjectReference Include="..\CulturaContigo.Api.Manager.Ticket\CulturaContigo.Api.Manager.Ticket.csproj" />
     <ProjectReference Include="..\CulturaContigo.Api\CulturaContigo.Api.csproj" />
   </ItemGroup>
 
