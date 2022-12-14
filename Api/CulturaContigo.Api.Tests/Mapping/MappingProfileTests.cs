@@ -108,4 +108,37 @@ internal class MappingProfileTests
             Assert.That(actual.Size, Is.EqualTo(request.Size));
         });
     }
+
+    [Test]
+    public void ShouldMapModelTicketCreateRequestToManagerTicketCreateRequest()
+    {
+        var request = _mother.ModelTicketCreateRequest;
+
+        var actual = _sut.Map<Manager.Ticket.Contract.TicketCreateRequest>(request);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.PersonalId, Is.EqualTo(request.PersonalId));
+            Assert.That(actual.ActivityId, Is.EqualTo(request.ActivityId));
+            Assert.That(actual.NumberOfTickets, Is.EqualTo(request.NumberOfTickets));
+            Assert.That(actual.TypeOfId, Is.EqualTo(request.TypeOfId));
+        });
+    }
+
+    [Test]
+    public void ShouldMapManagerTicketToModelTicket()
+    {
+        var request = _mother.ManagerTicket;
+
+        var actual = _sut.Map<Models.Ticket>(request);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Id, Is.EqualTo(request.Id));
+            Assert.That(actual.PersonalId, Is.EqualTo(request.PersonalId));
+            Assert.That(actual.ActivityId, Is.EqualTo(request.ActivityId));
+            Assert.That(actual.NumberOfTickets, Is.EqualTo(request.NumberOfTickets));
+            Assert.That(actual.TypeOfId, Is.EqualTo(request.TypeOfId));
+        });
+    }
 }

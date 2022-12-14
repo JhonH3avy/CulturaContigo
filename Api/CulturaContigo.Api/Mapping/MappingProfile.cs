@@ -15,5 +15,9 @@ internal class MappingProfile : Profile
         CreateMap<Manager.Activities.Administration.Contract.Activity, Models.Activity>();
 
         CreateMap<Models.PaginationOptions, Manager.Activities.Contract.PaginationOptions>();
+
+		CreateMap<Models.TicketCreateRequest, Manager.Ticket.Contract.TicketCreateRequest>();
+
+		CreateMap<Manager.Ticket.Contract.Ticket, Models.Ticket>();
 	}
 }

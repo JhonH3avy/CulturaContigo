@@ -1,7 +1,6 @@
-﻿using CulturaContigo.Api.Models;
-using Dapper;
+﻿using AutoMapper;
+using CulturaContigo.Api.Manager.Ticket.Contract;
 using Microsoft.AspNetCore.Mvc;
-using System.Data.SqlClient;
 
 namespace CulturaContigo.Api.Controllers;
 
@@ -9,38 +8,22 @@ namespace CulturaContigo.Api.Controllers;
 [ApiController]
 public class TicketController : ControllerBase
 {
-    private readonly string _connectionString;
+    private IMapper _mapper;
+    private ITicketManager _ticketManager;
 
-    public TicketController(IConfiguration configuration)
+
+    public TicketController(IMapper mapper, ITicketManager ticketManager)
     {
-        _connectionString = configuration.GetConnectionString("CulturaContigo.Db") ?? string.Empty;
+        _mapper = mapper;
+        _ticketManager = ticketManager;
     }
 
     [HttpPost]
-    [Consumes("application/json")]
-    [Produces("application/json")]
-    public async Task<Ticket> Post([FromBody] TicketCreateRequest ticketCreateRequest)
+    public async Task<Models.Ticket> Post([FromBody] Models.TicketCreateRequest ticketCreateRequest)
     {
-        using var connection = new SqlConnection(_connectionString);
-        var parameters = new DynamicParameters(ticketCreateRequest);
-        var result = await connection.QuerySingleAsync<Ticket>(@"
-            DECLARE @TicketIds TABLE (Id INT)
-            DECLARE @TicketId INT
-
-            INSERT INTO Tickets (ActivityId, TypeOfId, PersonalId, NumberOfTickets)
-            OUTPUT INSERTED.Id INTO @TicketIds
-            VALUES (@ActivityId, @TypeOfId, @PersonalId, @NumberOfTickets)
-
-            UPDATE Activities
-            SET
-                Available = Available - @NumberOfTickets
-            WHERE Id = @ActivityId
-
-            SET @TicketId = (SELECT TOP 1 Id FROM @TicketIds)
-
-            SELECT * FROM Tickets WHERE Id = @TicketId
-        ",
-        parameters);
+        var managerTicketCreateRequest = _mapper.Map<Manager.Ticket.Contract.TicketCreateRequest>(ticketCreateRequest);
+        var managerTicket = await _ticketManager.CreateTicket(managerTicketCreateRequest);
+        var result = _mapper.Map<Models.Ticket>(managerTicket);
         return result;
     }
 }

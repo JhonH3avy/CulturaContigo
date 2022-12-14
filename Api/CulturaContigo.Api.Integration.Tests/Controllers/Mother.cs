@@ -7,9 +7,11 @@ namespace CulturaContigo.Api.Integration.Tests.Controllers;
 internal class Mother
 {
     private readonly ActivitiesMother _activitiesMother;
+    private readonly TicketMother _ticketMother;
 
     public Mother()
     {
+        _ticketMother = new TicketMother();
         _activitiesMother = new ActivitiesMother();
     }
 
@@ -32,4 +34,18 @@ internal class Mother
         var result = await _activitiesMother.CreateActivity(activityCreateRequest);
         return result;
     }
+
+    internal TicketController CreateTicketController()
+    {
+        var result = _ticketMother.CreateTicketController();
+        return result;
+    }
+
+    internal TicketCreateRequest TicketCreateRequest(int activityId) => new()
+    {
+        ActivityId = activityId,
+        NumberOfTickets = 1,
+        PersonalId = "personalId",
+        TypeOfId = "typeOfId"
+    };
 }

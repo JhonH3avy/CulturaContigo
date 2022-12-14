@@ -46,6 +46,23 @@ internal class Mother
         TicketPrice = 10_000m
     };
 
+    public Models.TicketCreateRequest ModelTicketCreateRequest => new()
+    {
+        ActivityId  = 10,
+        NumberOfTickets = 5,
+        PersonalId = "personalId",
+        TypeOfId = "typeOfid"
+    };
+
+    public Manager.Ticket.Contract.Ticket ManagerTicket => new()
+    {
+        Id = 100,
+        ActivityId = 10,
+        NumberOfTickets = 5,
+        PersonalId = "personalId",
+        TypeOfId = "typeOfid"
+    };
+
     internal IMapper CreateMapper()
     {
         var configurationExpression = new MapperConfigurationExpression();

@@ -7,13 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.123" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CulturaContigo.Api.Manager.Activities.Administration\CulturaContigo.Api.Manager.Activities.Administration.csproj" />
     <ProjectReference Include="..\CulturaContigo.Api.Manager.Activities\CulturaContigo.Api.Manager.Activities.csproj" />
+    <ProjectReference Include="..\CulturaContigo.Api.Manager.Ticket\CulturaContigo.Api.Manager.Ticket.csproj" />
   </ItemGroup>
 
 </Project>
