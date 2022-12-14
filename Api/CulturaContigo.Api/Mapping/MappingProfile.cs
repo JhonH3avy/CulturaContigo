@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CulturaContigo.Api.Models.Administration;
 
 namespace CulturaContigo.Api.Mapping;
 
@@ -6,11 +7,11 @@ internal class MappingProfile : Profile
 {
 	public MappingProfile()
 	{
-		CreateMap<Models.ActivityCreateRequest, Manager.Activities.Contract.ActivityCreateRequest>();
+		CreateMap<ActivityCreateRequest, Manager.Activities.Contract.ActivityCreateRequest>();
 
 		CreateMap<Manager.Activities.Contract.Activity, Models.Activity>();
 
-        CreateMap<Models.ActivityCreateRequest, Manager.Activities.Administration.Contract.ActivityCreateRequest>();
+        CreateMap<ActivityCreateRequest, Manager.Activities.Administration.Contract.ActivityCreateRequest>();
 
         CreateMap<Manager.Activities.Administration.Contract.Activity, Models.Activity>();
 

@@ -24,7 +24,7 @@ public class ActivitiesControllerTests
     [Test]
     public async Task ShouldPost()
     {
-        var activityCreateRequest = new Models.ActivityCreateRequest();
+        var activityCreateRequest = new Models.Administration.ActivityCreateRequest();
         var managerActivityCreateRequest = new ActivityCreateRequest();
         var managerActivity = new Activity();
         var expectedActivity = new Models.Activity { Id = 1 };

@@ -69,13 +69,4 @@ public class ActivitiesController : ControllerBase
         var result = _mapper.Map<Models.Activity>(managerActivity);
         return result;
     }
-
-    [HttpPost]
-    public async Task<Models.Activity> Post([FromBody] Models.ActivityCreateRequest activityCreateRequest)
-    {
-        var managerActivityCreateRequest = _mapper.Map<Manager.Activities.Contract.ActivityCreateRequest>(activityCreateRequest);
-        var managerActivity = await _activitiesManager.CreateActivity(managerActivityCreateRequest);
-        var result = _mapper.Map<Models.Activity>(managerActivity);
-        return result;
-    }
 }

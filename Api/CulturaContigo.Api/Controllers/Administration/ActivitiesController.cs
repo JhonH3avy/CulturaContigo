@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CulturaContigo.Api.Manager.Activities.Administration.Contract;
+using CulturaContigo.Api.Models.Administration;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +18,9 @@ public class ActivitiesController : ControllerBase
         _activitiesManager = activitiesManager;
     }
 
-    internal async Task<Models.Activity> Post(Models.ActivityCreateRequest activityCreateRequest)
+    internal async Task<Models.Activity> Post(Models.Administration.ActivityCreateRequest activityCreateRequest)
     {
-        var managerActivityCreateRequest = _mapper.Map<ActivityCreateRequest>(activityCreateRequest);
+        var managerActivityCreateRequest = _mapper.Map<Manager.Activities.Administration.Contract.ActivityCreateRequest>(activityCreateRequest);
         var managerActivity = await _activitiesManager.CreateActivity(managerActivityCreateRequest);
         var result = _mapper.Map<Models.Activity>(managerActivity);
         return result;

@@ -3,12 +3,13 @@ using CulturaContigo.Api.Common.Integration.Tests.DependencyBuilders;
 using CulturaContigo.Api.Controllers;
 using CulturaContigo.Api.Mapping;
 using CulturaContigo.Api.Models;
+using CulturaContigo.Api.Models.Administration;
 
 namespace CulturaContigo.Api.Common.Integration.Tests.Mothers.Api;
 
 internal class ActivitiesMother
 {
-    public Models.ActivityCreateRequest ActivityCreateRequest => new()
+    public ActivityCreateRequest ActivityCreateRequest => new()
     {
         Name = "name",
         Place = "place",
@@ -18,14 +19,6 @@ internal class ActivitiesMother
         ScheduledDateTime = DateTime.UtcNow,
         TicketPrice = 10_000m
     };
-
-    public async Task<Activity> CreateActivity(ActivityCreateRequest? activityCreateRequest = null)
-    {
-        var activitiesController = CreateActivitiesController();
-        var request = activityCreateRequest == null ? ActivityCreateRequest : activityCreateRequest;
-        var result = await activitiesController.Post(request);
-        return result;
-    }
 
     internal ActivitiesController CreateActivitiesController()
     {

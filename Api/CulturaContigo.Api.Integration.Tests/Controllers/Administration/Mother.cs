@@ -1,6 +1,6 @@
 ﻿using CulturaContigo.Api.Common.Integration.Tests.Mothers.Api.Administration;
 using CulturaContigo.Api.Controllers.Administration;
-using CulturaContigo.Api.Models;
+using CulturaContigo.Api.Models.Administration;
 
 namespace CulturaContigo.Api.Integration.Tests.Controllers.Administration;
 internal class Mother

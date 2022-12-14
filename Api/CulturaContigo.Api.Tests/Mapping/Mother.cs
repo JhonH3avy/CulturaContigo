@@ -1,11 +1,12 @@
 ﻿using AutoMapper;
 using CulturaContigo.Api.Mapping;
+using CulturaContigo.Api.Models.Administration;
 
 namespace CulturaContigo.Api.Tests.Mapping;
 
 internal class Mother
 {
-    public Models.ActivityCreateRequest ModelActivityCreateRequest => new()
+    public ActivityCreateRequest ModelActivityCreateRequest => new()
     {
         Name = "name",
         Details = "details",

@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CulturaContigo.Api.Models;
+namespace CulturaContigo.Api.Models.Administration;
 
 public record ActivityCreateRequest
 {
-    [Required] 
+    [Required]
     public string? Name { get; set; }
-    [Required] 
+    [Required]
     public string? Details { get; set; }
     public DateTime? ScheduledDateTime { get; set; }
     public string? Place { get; set; }

@@ -22,31 +22,6 @@ internal class ActivitiesControllerTests
     }
 
     [Test]
-    public async Task ShouldPost()
-    {
-        var activityCreateRequest = new Models.ActivityCreateRequest();
-        var managerActivityCreateRequest = new Manager.Activities.Contract.ActivityCreateRequest();
-        var managerActivity = new Manager.Activities.Contract.Activity();
-        var expectedActivity = new Models.Activity { Id = 1 };
-       
-        _mapper
-            .Setup(x => x.Map<Manager.Activities.Contract.ActivityCreateRequest>(activityCreateRequest))
-            .Returns(managerActivityCreateRequest);
-        _activitiesManager
-            .Setup(x => x.CreateActivity(managerActivityCreateRequest))
-            .ReturnsAsync(managerActivity);
-        _mapper
-            .Setup(x => x.Map<Models.Activity>(managerActivity))
-            .Returns(expectedActivity);
-
-        var actual = await _sut.Post(activityCreateRequest);
-
-        Assert.That(actual, Is.EqualTo(expectedActivity));
-
-        _mockRepository.VerifyAll();
-    }
-
-    [Test]
     public async Task ShouldGet()
     {
         const int activityId = 1;
