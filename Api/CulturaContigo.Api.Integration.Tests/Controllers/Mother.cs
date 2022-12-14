@@ -13,6 +13,7 @@ internal class Mother
 
     public Mother()
     {
+        _administrationActivitiesMother = new Common.Integration.Tests.Mothers.Api.Administration.ActivitiesMother();
         _ticketMother = new TicketMother();
         _activitiesMother = new ActivitiesMother();
     }

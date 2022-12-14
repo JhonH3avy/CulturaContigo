@@ -15,14 +15,6 @@ internal class ActivitiesManager : IActivitiesManager
         _activitiesAccess = activitiesAccess;
     }
 
-    public async Task<Contract.Activity> CreateActivity(Contract.ActivityCreateRequest activityCreateRequest)
-    {
-        var accessActivityCreateRequest = _mapper.Map<Access.Activities.Contract.ActivityCreateRequest>(activityCreateRequest);
-        var accessActivity = await _activitiesAccess.CreateActivity(accessActivityCreateRequest);
-        var result = _mapper.Map<Manager.Activities.Contract.Activity>(accessActivity);
-        return result;
-    }
-
     public async Task<Contract.Activity> GetActivity(int activityId)
     {
         var accessActivity = await _activitiesAccess.GetActivity(activityId);

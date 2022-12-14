@@ -14,11 +14,4 @@ internal class ActivityMother
         ScheduledDateTime = DateTime.UtcNow,
         TicketPrice = 10_000m
     };
-
-    internal async Task<Activity> CreateActivity()
-    {
-        var activitiesManager = ManagerDependencyBuilder.CreateActivitiesManager();
-        var result = await activitiesManager.CreateActivity(ActivityCreateRequest);
-        return result;
-    }
 }

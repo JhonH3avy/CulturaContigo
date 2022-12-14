@@ -1,4 +1,5 @@
-﻿using CulturaContigo.Api.Manager.Activities.Administration.Contract;
+﻿using CulturaContigo.Api.Common.Integration.Tests.DependencyBuilders;
+using CulturaContigo.Api.Manager.Activities.Administration.Contract;
 
 namespace CulturaContigo.Api.Common.Integration.Tests.Mothers.Manager.Administration;
 
@@ -14,4 +15,11 @@ internal class ActivityMother
         ScheduledDateTime = DateTime.UtcNow,
         TicketPrice = 10_000m
     };
+
+    internal async Task<Activity> CreateActivity()
+    {
+        var activitiesManager = ManagerDependencyBuilder.CreateAdministrationActivitiesManager();
+        var result = await activitiesManager.CreateActivity(ActivityCreateRequest);
+        return result;
+    }
 }

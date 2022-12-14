@@ -1,6 +1,6 @@
 ﻿using CulturaContigo.Api.Common.Integration.Tests.DependencyBuilders;
-using CulturaContigo.Api.Common.Integration.Tests.Mothers.Manager;
-using CulturaContigo.Api.Manager.Activities.Contract;
+using CulturaContigo.Api.Common.Integration.Tests.Mothers.Manager.Administration;
+using CulturaContigo.Api.Manager.Activities.Administration.Contract;
 using CulturaContigo.Api.Manager.Ticket.Contract;
 
 namespace CulturaContigo.Api.Manager.Ticket.Integration.Tests;

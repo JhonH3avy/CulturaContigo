@@ -22,31 +22,6 @@ public class ActivitiesManagerTests
     }
 
     [Test]
-    public async Task ShouldCreateActivity()
-    {
-        var activityCreateRequest = new Manager.Activities.Contract.ActivityCreateRequest();
-        var accessActivityCreateRequest = new Access.Activities.Contract.ActivityCreateRequest();
-        var accessActivity = new Access.Activities.Contract.Activity();
-        var expectedActivity = new Manager.Activities.Contract.Activity { Id = 1 };
-
-        _mapper
-            .Setup(x => x.Map<Access.Activities.Contract.ActivityCreateRequest>(activityCreateRequest))
-            .Returns(accessActivityCreateRequest);
-        _activitiesAccess
-            .Setup(x => x.CreateActivity(accessActivityCreateRequest))
-            .ReturnsAsync(accessActivity);
-        _mapper
-            .Setup(x => x.Map<Manager.Activities.Contract.Activity>(accessActivity))
-            .Returns(expectedActivity);
-
-        var actual = await _sut.CreateActivity(activityCreateRequest);
-
-        Assert.That(actual, Is.EqualTo(expectedActivity));
-
-        _mockRepository.VerifyAll();
-    }
-
-    [Test]
     public async Task ShouldGetActivity()
     {
         const int activityId = 1;

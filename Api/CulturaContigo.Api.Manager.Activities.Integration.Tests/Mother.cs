@@ -1,5 +1,5 @@
 ﻿using CulturaContigo.Api.Common.Integration.Tests.DependencyBuilders;
-using CulturaContigo.Api.Common.Integration.Tests.Mothers.Manager;
+using CulturaContigo.Api.Common.Integration.Tests.Mothers.Manager.Administration;
 using CulturaContigo.Api.Manager.Activities.Contract;
 
 namespace CulturaContigo.Api.Manager.Activities.Integration.Tests;
@@ -13,7 +13,7 @@ internal class Mother
         _activityMother = new ActivityMother();
     }
 
-    public ActivityCreateRequest ActivityCreateRequest => _activityMother.ActivityCreateRequest;
+    public Administration.Contract.ActivityCreateRequest ActivityCreateRequest => _activityMother.ActivityCreateRequest;
 
     public GetActivitiesInDateRangeRequest GetActivitiesInDateRangeRequest(DateTime startDateTime, DateTime endDateTime) => new()
     {
@@ -32,7 +32,7 @@ internal class Mother
         return result;
     }
 
-    internal async Task<Activity> CreateActivity()
+    internal async Task<Administration.Contract.Activity> CreateActivity()
     {
         var result = await _activityMother.CreateActivity();
         return result;
