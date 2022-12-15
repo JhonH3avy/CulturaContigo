@@ -28,10 +28,13 @@ public class TicketAccessTests
         var ticketCreateRequest = _mother.TicketCreateRequest(activity.Id);
 
         var actual = await _sut.CreateTicket(ticketCreateRequest);
-
-        Assert.That(actual.Id, Is.Not.Zero);
-        Assert.That(actual.PersonalId, Is.EqualTo(ticketCreateRequest.PersonalId));
-        Assert.That(actual.ActivityId, Is.EqualTo(ticketCreateRequest.ActivityId));
-        Assert.That(actual.NumberOfTickets, Is.EqualTo(ticketCreateRequest.NumberOfTickets));
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Id, Is.Not.Zero);
+            Assert.That(actual.PersonalId, Is.EqualTo(ticketCreateRequest.PersonalId));
+            Assert.That(actual.ActivityId, Is.EqualTo(ticketCreateRequest.ActivityId));
+            Assert.That(actual.NumberOfTickets, Is.EqualTo(ticketCreateRequest.NumberOfTickets));
+        });
     }
 }

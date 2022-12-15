@@ -26,11 +26,14 @@ public class MappingProfileTests
         var request = _mother.ManagerTicketCreateRequest;
 
         var actual = _sut.Map<Access.Ticket.Contract.TicketCreateRequest>(request);
-
-        Assert.That(actual.PersonalId, Is.EqualTo(request.PersonalId));
-        Assert.That(actual.ActivityId, Is.EqualTo(request.ActivityId));
-        Assert.That(actual.TypeOfId, Is.EqualTo(request.TypeOfId));
-        Assert.That(actual.NumberOfTickets, Is.EqualTo(request.NumberOfTickets));
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.PersonalId, Is.EqualTo(request.PersonalId));
+            Assert.That(actual.ActivityId, Is.EqualTo(request.ActivityId));
+            Assert.That(actual.TypeOfId, Is.EqualTo(request.TypeOfId));
+            Assert.That(actual.NumberOfTickets, Is.EqualTo(request.NumberOfTickets));
+        });
     }
 
     [Test]
@@ -40,10 +43,13 @@ public class MappingProfileTests
 
         var actual = _sut.Map<Contract.Ticket>(request);
         
-        Assert.That(actual.Id, Is.EqualTo(request.Id));
-        Assert.That(actual.PersonalId, Is.EqualTo(request.PersonalId));
-        Assert.That(actual.ActivityId, Is.EqualTo(request.ActivityId));
-        Assert.That(actual.TypeOfId, Is.EqualTo(request.TypeOfId));
-        Assert.That(actual.NumberOfTickets, Is.EqualTo(request.NumberOfTickets));
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Id, Is.EqualTo(request.Id));
+            Assert.That(actual.PersonalId, Is.EqualTo(request.PersonalId));
+            Assert.That(actual.ActivityId, Is.EqualTo(request.ActivityId));
+            Assert.That(actual.TypeOfId, Is.EqualTo(request.TypeOfId));
+            Assert.That(actual.NumberOfTickets, Is.EqualTo(request.NumberOfTickets));
+        });
     }
 }

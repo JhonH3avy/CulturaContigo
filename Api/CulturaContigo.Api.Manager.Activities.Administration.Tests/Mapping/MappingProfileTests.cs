@@ -27,13 +27,16 @@ public class MappingProfileTests
 
         var actual = _sut.Map<Access.Activities.Contract.ActivityCreateRequest>(request);
 
-        Assert.That(actual.Name, Is.EqualTo(request.Name));
-        Assert.That(actual.Details, Is.EqualTo(request.Details));
-        Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
-        Assert.That(actual.Place, Is.EqualTo(request.Place));
-        Assert.That(actual.ScheduledDateTime, Is.EqualTo(request.ScheduledDateTime));
-        Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
-        Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Name, Is.EqualTo(request.Name));
+            Assert.That(actual.Details, Is.EqualTo(request.Details));
+            Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
+            Assert.That(actual.Place, Is.EqualTo(request.Place));
+            Assert.That(actual.ScheduledDateTime, Is.EqualTo(request.ScheduledDateTime));
+            Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
+            Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
+        });
     }
 
     [Test]
@@ -43,13 +46,16 @@ public class MappingProfileTests
 
         var actual = _sut.Map<Contract.Activity>(request);
 
-        Assert.That(actual.Id, Is.EqualTo(request.Id));
-        Assert.That(actual.Name, Is.EqualTo(request.Name));
-        Assert.That(actual.Details, Is.EqualTo(request.Details));
-        Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
-        Assert.That(actual.Place, Is.EqualTo(request.Place));
-        Assert.That(actual.ScheduledDateTime, Is.EqualTo(request.ScheduledDateTime));
-        Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
-        Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Id, Is.EqualTo(request.Id));
+            Assert.That(actual.Name, Is.EqualTo(request.Name));
+            Assert.That(actual.Details, Is.EqualTo(request.Details));
+            Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
+            Assert.That(actual.Place, Is.EqualTo(request.Place));
+            Assert.That(actual.ScheduledDateTime, Is.EqualTo(request.ScheduledDateTime));
+            Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
+            Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
+        });
     }
 }

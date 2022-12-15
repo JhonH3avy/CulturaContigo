@@ -29,10 +29,13 @@ public class TicketManagerTests
 
         var actual = await _sut.CreateTicket(ticketCreateRequest);
 
-        Assert.That(actual.Id, Is.Not.Zero);
-        Assert.That(actual.PersonalId, Is.EqualTo(ticketCreateRequest.PersonalId));
-        Assert.That(actual.ActivityId, Is.EqualTo(activity.Id));
-        Assert.That(actual.NumberOfTickets, Is.EqualTo(ticketCreateRequest.NumberOfTickets));
-        Assert.That(actual.TypeOfId, Is.EqualTo(ticketCreateRequest.TypeOfId));
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Id, Is.Not.Zero);
+            Assert.That(actual.PersonalId, Is.EqualTo(ticketCreateRequest.PersonalId));
+            Assert.That(actual.ActivityId, Is.EqualTo(activity.Id));
+            Assert.That(actual.NumberOfTickets, Is.EqualTo(ticketCreateRequest.NumberOfTickets));
+            Assert.That(actual.TypeOfId, Is.EqualTo(ticketCreateRequest.TypeOfId));
+        });
     }
 }

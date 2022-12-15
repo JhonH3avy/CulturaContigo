@@ -22,13 +22,16 @@ internal class MappingProfileTests
 
         var actual = _sut.Map<Access.Activities.Contract.ActivityCreateRequest>(request);
 
-        Assert.That(actual.Name, Is.EqualTo(request.Name));
-        Assert.That(actual.Details, Is.EqualTo(request.Details));
-        Assert.That(actual.Place, Is.EqualTo(request.Place));
-        Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
-        Assert.That(actual.ScheduledDateTime, Is.EqualTo(request.ScheduledDateTime));
-        Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
-        Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Name, Is.EqualTo(request.Name));
+            Assert.That(actual.Details, Is.EqualTo(request.Details));
+            Assert.That(actual.Place, Is.EqualTo(request.Place));
+            Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
+            Assert.That(actual.ScheduledDateTime, Is.EqualTo(request.ScheduledDateTime));
+            Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
+            Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
+        });
     }
 
     [Test]
@@ -38,14 +41,17 @@ internal class MappingProfileTests
 
         var actual = _sut.Map<Manager.Activities.Contract.Activity>(request);
 
-        Assert.That(actual.Id, Is.EqualTo(request.Id));
-        Assert.That(actual.Name, Is.EqualTo(request.Name));
-        Assert.That(actual.Details, Is.EqualTo(request.Details));
-        Assert.That(actual.Place, Is.EqualTo(request.Place));
-        Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
-        Assert.That(actual.ScheduledDateTime, Is.EqualTo(request.ScheduledDateTime));
-        Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
-        Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Id, Is.EqualTo(request.Id));
+            Assert.That(actual.Name, Is.EqualTo(request.Name));
+            Assert.That(actual.Details, Is.EqualTo(request.Details));
+            Assert.That(actual.Place, Is.EqualTo(request.Place));
+            Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
+            Assert.That(actual.ScheduledDateTime, Is.EqualTo(request.ScheduledDateTime));
+            Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
+            Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
+        });
     }
 
     [Test]
@@ -54,9 +60,12 @@ internal class MappingProfileTests
         var request = _mother.ManagerPaginationOptions;
 
         var actual = _sut.Map<Access.Activities.Contract.PaginationOptions>(request);
-
-        Assert.That(actual.Page, Is.EqualTo(request.Page));
-        Assert.That(actual.Size, Is.EqualTo(request.Size));
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Page, Is.EqualTo(request.Page));
+            Assert.That(actual.Size, Is.EqualTo(request.Size));
+        });
     }
 
     [Test]
@@ -65,8 +74,11 @@ internal class MappingProfileTests
         var request = _mother.ManagerGetActivitiesInDateRangeRequest;
 
         var actual = _sut.Map<Access.Activities.Contract.GetActivitiesInDateRangeRequest>(request);
-
-        Assert.That(actual.StartDateTime, Is.EqualTo(request.StartDateTime));
-        Assert.That(actual.EndDateTime, Is.EqualTo(request.EndDateTime));
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.StartDateTime, Is.EqualTo(request.StartDateTime));
+            Assert.That(actual.EndDateTime, Is.EqualTo(request.EndDateTime));
+        });
     }
 }

@@ -51,7 +51,6 @@ internal class MappingProfileTests
             Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
             Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
             Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
-
         });
     }
 
@@ -91,7 +90,6 @@ internal class MappingProfileTests
             Assert.That(actual.ImageUrl, Is.EqualTo(request.ImageUrl));
             Assert.That(actual.Capacity, Is.EqualTo(request.Capacity));
             Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
-
         });
     }
 
