@@ -9,7 +9,7 @@ import { Activity } from '../models/activity';
 })
 export class ActivityService {
 
-  private baseUrl = 'https://localhost:7244/api';
+  private baseUrl = 'https://localhost:7244/api/administration';
 
   constructor(private httpClient: HttpClient) { }
 

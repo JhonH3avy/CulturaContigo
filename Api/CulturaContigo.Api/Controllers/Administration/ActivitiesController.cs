@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using CulturaContigo.Api.Manager.Activities.Administration.Contract;
-using CulturaContigo.Api.Models.Administration;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CulturaContigo.Api.Controllers.Administration;
-[Route("api/[controller]")]
+[Route("api/administration/[controller]")]
 [ApiController]
 public class ActivitiesController : ControllerBase
 {
