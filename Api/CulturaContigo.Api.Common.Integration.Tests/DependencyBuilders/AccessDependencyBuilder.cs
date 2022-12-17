@@ -28,7 +28,7 @@ internal static class AccessDependencyBuilder
     private static DatabaseConnectionStringsConfiguration GetDatabaseConnectionStringsConfiguration()
     {
         var configurationRoot = AppSettingsConfigurationDependencyBuilder.CreateConfigurationRoot();
-        var culturaContigoConnectionString = configurationRoot.GetConnectionString(CulturaContigoDbConnectionStringSection);
+        var culturaContigoConnectionString = configurationRoot.GetConnectionString(DatabaseConnectionStringsConfiguration.ConnectionStringName);
         var databaseConnectionStringsConfiguration = new DatabaseConnectionStringsConfiguration
         {
             CulturaContigo = culturaContigoConnectionString

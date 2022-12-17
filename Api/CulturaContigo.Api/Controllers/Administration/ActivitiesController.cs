@@ -3,6 +3,7 @@ using CulturaContigo.Api.Manager.Activities.Administration.Contract;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CulturaContigo.Api.Controllers.Administration;
+
 [Route("api/administration/[controller]")]
 [ApiController]
 public class ActivitiesController : ControllerBase
