@@ -1,8 +1,13 @@
+using CulturaContigo.Api;
+
 const string LocalHostCorsPolicy = "AllowLocalHostOrigin";
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddAccessServices();
+builder.Services.AddManagerServices();
+builder.Services.AddOptionsConfiguration(builder.Configuration);
+builder.Services.AddMapper();
 
 builder.Services.AddControllers();
 

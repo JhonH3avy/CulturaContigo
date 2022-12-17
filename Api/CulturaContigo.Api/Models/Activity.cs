@@ -1,6 +1,6 @@
 ﻿namespace CulturaContigo.Api.Models;
 
-public class Activity
+public record Activity
 {
     public Activity()
     {

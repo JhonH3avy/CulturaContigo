@@ -1,8 +1,6 @@
-﻿using CulturaContigo.Api.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Dapper;
-using System.Data.SqlClient;
+﻿using Microsoft.AspNetCore.Mvc;
+using CulturaContigo.Api.Manager.Activities.Contract;
+using AutoMapper;
 
 namespace CulturaContigo.Api.Controllers;
 
@@ -10,119 +8,65 @@ namespace CulturaContigo.Api.Controllers;
 [ApiController]
 public class ActivitiesController : ControllerBase
 {
-    private readonly string _connectionString;
+    private readonly IMapper _mapper;
+    private readonly IActivitiesManager _activitiesManager;
 
-    public ActivitiesController(IConfiguration configuration)
+    public ActivitiesController(IMapper mapper, IActivitiesManager activitiesManager)
     {
-        _connectionString = configuration.GetConnectionString("CulturaContigo.Db") ?? string.Empty;
+        _mapper = mapper;
+        _activitiesManager = activitiesManager;
     }
 
     [HttpGet("now")]
-    [Produces("application/json")]
-    public async Task<IEnumerable<Activity>> GetActivitiesNow([FromQuery] PaginationOptions paginationOptions)
+    public async Task<IEnumerable<Models.Activity>> GetActivitiesNow([FromQuery] Models.PaginationOptions paginationOptions)
     {
-        using var connection = new SqlConnection(_connectionString);
-        var now = DateTime.UtcNow;
-        var aWeekLater = DateTime.UtcNow.AddDays(7);
-        var parameters = new
+        var managerPaginationOptions = _mapper.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions);
+        var getActivitiesInDateRateRequest = new GetActivitiesInDateRangeRequest
         {
-            SkippedItems = paginationOptions.Size * paginationOptions.Page,
-            paginationOptions.Size,
-            Now = now,
-            AWeekLater = aWeekLater
+            PaginationOptions = managerPaginationOptions,
+            StartDateTime = DateTime.UtcNow,
+            EndDateTime = DateTime.UtcNow.AddDays(7)
         };
-        var result = await connection.QueryAsync<Activity>(@"
-            SELECT * 
-            FROM Activities 
-            WHERE ScheduledDateTime BETWEEN @Now AND @AWeekLater
-            ORDER BY ScheduledDateTime ASC 
-            OFFSET @SkippedItems ROWS 
-            FETCH NEXT @Size ROWS ONLY
-        ",
-        parameters);
+        var managerActivities = await _activitiesManager.GetActivitiesByDateRange(getActivitiesInDateRateRequest);
+        var result = _mapper.Map<IEnumerable<Models.Activity>>(managerActivities);
         return result;
     }
 
     [HttpGet("soon")]
-    [Produces("application/json")]
-    public async Task<IEnumerable<Activity>> GetActivitiesComingSoon([FromQuery] PaginationOptions paginationOptions)
+    public async Task<IEnumerable<Models.Activity>> GetActivitiesComingSoon([FromQuery] Models.PaginationOptions paginationOptions)
     {
-        using var connection = new SqlConnection(_connectionString);
-        var aWeekLater = DateTime.UtcNow.AddDays(7);
-        var aMonthLater = DateTime.UtcNow.AddDays(30);
-        var parameters = new
+        var managerPaginationOptions = _mapper.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions);
+        var getActivitiesInDateRateRequest = new GetActivitiesInDateRangeRequest
         {
-            SkippedItems = paginationOptions.Size * paginationOptions.Page,
-            paginationOptions.Size,
-            AWeekLater = aWeekLater,
-            AMonthLater = aMonthLater
+            PaginationOptions = managerPaginationOptions,
+            StartDateTime = DateTime.UtcNow.AddMonths(1),
+            EndDateTime = DateTime.UtcNow.AddYears(1)
         };
-        var result = await connection.QueryAsync<Activity>(@"
-            SELECT * 
-            FROM Activities 
-            WHERE ScheduledDateTime BETWEEN @AWeekLater AND @AMonthLater
-            ORDER BY ScheduledDateTime ASC 
-            OFFSET @SkippedItems ROWS 
-            FETCH NEXT @Size ROWS ONLY
-        ",
-        parameters);
+        var managerActivities = await _activitiesManager.GetActivitiesByDateRange(getActivitiesInDateRateRequest);
+        var result = _mapper.Map<IEnumerable<Models.Activity>>(managerActivities);
         return result;
     }
 
     [HttpGet("late")]
-    [Produces("application/json")]
-    public async Task<IEnumerable<Activity>> GetActivitiesComingLate([FromQuery] PaginationOptions paginationOptions)
+    public async Task<IEnumerable<Models.Activity>> GetActivitiesComingLate([FromQuery] Models.PaginationOptions paginationOptions)
     {
-        using var connection = new SqlConnection(_connectionString);
-        var now = DateTime.UtcNow;
-        var aMonthLater = DateTime.UtcNow.AddDays(30);
-        var parameters = new
+        var managerPaginationOptions = _mapper.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions);
+        var getActivitiesInDateRateRequest = new GetActivitiesInDateRangeRequest
         {
-            SkippedItems = paginationOptions.Size * paginationOptions.Page,
-            paginationOptions.Size,
-            AMonthLater = aMonthLater
+            PaginationOptions = managerPaginationOptions,
+            StartDateTime = DateTime.UtcNow.AddDays(7),
+            EndDateTime = DateTime.UtcNow.AddMonths(1)
         };
-        var result = await connection.QueryAsync<Activity>(@"
-            SELECT * 
-            FROM Activities 
-            WHERE ScheduledDateTime > @AMonthLater
-            ORDER BY ScheduledDateTime ASC 
-            OFFSET @SkippedItems ROWS 
-            FETCH NEXT @Size ROWS ONLY
-        ",
-        parameters);
+        var managerActivities = await _activitiesManager.GetActivitiesByDateRange(getActivitiesInDateRateRequest);
+        var result = _mapper.Map<IEnumerable<Models.Activity>>(managerActivities);
         return result;
     }
 
     [HttpGet("{activityId}")]
-    [Produces("application/json")]
-    public async Task<Activity> Get(int activityId)
+    public async Task<Models.Activity> Get(int activityId)
     {
-        using var connection = new SqlConnection(_connectionString);
-        var result = await connection.QuerySingleAsync<Activity>($"SELECT * FROM Activities WHERE Id = {activityId}");
-        return result;
-    }
-
-    [HttpPost]
-    [Consumes("application/json")]
-    [Produces("application/json")]
-    public async Task<Activity> Post([FromBody] ActivityCreateRequest activityCreateRequest)
-    {
-        using var connection = new SqlConnection(_connectionString);
-        var parameters = new DynamicParameters(activityCreateRequest);
-        var result = await connection.QuerySingleAsync<Activity>(@"
-            DECLARE @ActivitiesIds TABLE (Id INT)
-            DECLARE @ActivityId INT
-
-            INSERT INTO Activities(Name, Details, ScheduledDateTime, Place, TicketPrice, Capacity, Available, ImageUrl)
-            OUTPUT INSERTED.Id INTO @ActivitiesIds
-            VALUES (@Name, @Details, @ScheduledDateTime, @Place, @TicketPrice, @Capacity, @Capacity, @ImageUrl)
-
-            SET @ActivityId = (SELECT TOP 1 Id FROM @ActivitiesIds)
-
-            SELECT * FROM Activities WHERE Id = @ActivityId
-        ",
-        parameters);
+        var managerActivity = await _activitiesManager.GetActivity(activityId);
+        var result = _mapper.Map<Models.Activity>(managerActivity);
         return result;
     }
 }
