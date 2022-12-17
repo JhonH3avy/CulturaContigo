@@ -17,7 +17,8 @@ public class ActivitiesController : ControllerBase
         _activitiesManager = activitiesManager;
     }
 
-    internal async Task<Models.Activity> Post(Models.Administration.ActivityCreateRequest activityCreateRequest)
+    [HttpPost]
+    public async Task<Models.Activity> Post(Models.Administration.ActivityCreateRequest activityCreateRequest)
     {
         var managerActivityCreateRequest = _mapper.Map<Manager.Activities.Administration.Contract.ActivityCreateRequest>(activityCreateRequest);
         var managerActivity = await _activitiesManager.CreateActivity(managerActivityCreateRequest);

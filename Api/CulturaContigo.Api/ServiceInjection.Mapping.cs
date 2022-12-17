@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CulturaContigo.Api.Manager.Activities;
+using CulturaContigo.Api.Manager.Activities.Administration;
 using CulturaContigo.Api.Manager.Ticket;
 
 namespace CulturaContigo.Api;
@@ -12,6 +13,7 @@ public static partial class ServiceInjection
         {
             var configurationExpression = new MapperConfigurationExpression();
             configurationExpression.AddActivitiesManagerMappingProfile();
+            configurationExpression.AddAdministrationActivitiesManagerMappingProfile();
             configurationExpression.AddTicketManagerMappingProfile();
             configurationExpression.AddProfile<Mapping.MappingProfile>();
             var configuration = new MapperConfiguration(configurationExpression);

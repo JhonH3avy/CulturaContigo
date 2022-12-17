@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace CulturaContigo.Api.Manager.Activities.Administration;
 
-public static class ServiceInjection
+public static partial class ServiceInjection
 {
     public static void AddAdministrationActivitiesManagerServices(this IServiceCollection services)
     {
