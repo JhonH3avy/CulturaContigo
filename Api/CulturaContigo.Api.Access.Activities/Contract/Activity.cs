@@ -17,4 +17,5 @@ public record Activity
     public int? Capacity { get; set; }
     public int? Available { get; set; }
     public string? ImageUrl { get; set; }
+    public bool IsDeleted { get; set; }
 }

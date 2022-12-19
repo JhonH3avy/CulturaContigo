@@ -8,5 +8,6 @@
     [Details] VARCHAR(1000) NOT NULL, 
     [Capacity] INT NULL, 
     [Available] INT NULL, 
-    [ImageUrl] VARCHAR(MAX) NULL 
+    [ImageUrl] VARCHAR(MAX) NULL, 
+    [IsDeleted] BIT NOT NULL DEFAULT 0 
 )

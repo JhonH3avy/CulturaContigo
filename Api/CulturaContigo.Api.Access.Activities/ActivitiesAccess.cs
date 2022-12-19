@@ -16,7 +16,6 @@ internal class ActivitiesAccess : IActivitiesAccess
 
     public async Task<Activity> CreateActivity(ActivityCreateRequest activityCreateRequest)
     {
-        using var connection = new SqlConnection(_connectionString);
         var parameters = new DynamicParameters();
         parameters.Add("Name", activityCreateRequest.Name);
         parameters.Add("Details", activityCreateRequest.Details);
@@ -25,6 +24,7 @@ internal class ActivitiesAccess : IActivitiesAccess
         parameters.Add("TicketPrice", activityCreateRequest.TicketPrice);
         parameters.Add("Capacity", activityCreateRequest.Capacity);
         parameters.Add("ImageUrl", activityCreateRequest.ImageUrl);
+        using var connection = new SqlConnection(_connectionString);
         var result = await connection.QuerySingleAsync<Activity>(@"
             DECLARE @ActivitiesIds TABLE (Id INT)
             DECLARE @ActivityId INT
@@ -44,21 +44,35 @@ internal class ActivitiesAccess : IActivitiesAccess
                 TicketPrice, 
                 Capacity, 
                 Available, 
-                ImageUrl
+                ImageUrl,
+                IsDeleted
             FROM Activities WHERE Id = @ActivityId
         ",
         parameters);
         return result;
     }
 
-    public async Task<IEnumerable<Activity>> GetActivitiesInDateRange(GetActivitiesInDateRangeRequest getActivitiesInDateRangeRequest)
+    public async Task DeleteActivity(int activityId)
     {
-        using var connection = new SqlConnection(_connectionString);
         var parameters = new DynamicParameters();
-        parameters.Add("SkippedItems", getActivitiesInDateRangeRequest.PaginationOptions.Size * getActivitiesInDateRangeRequest.PaginationOptions.Page);
-        parameters.Add("Size", getActivitiesInDateRangeRequest.PaginationOptions.Size);
-        parameters.Add("StartDate", getActivitiesInDateRangeRequest.StartDateTime, System.Data.DbType.DateTime2, precision: 7);
-        parameters.Add("EndDate", getActivitiesInDateRangeRequest.EndDateTime, System.Data.DbType.DateTime2, precision: 7);
+        parameters.Add("ActivityId", activityId);
+        using var connection = new SqlConnection(_connectionString);
+        var result = await connection.ExecuteAsync(@"
+            UPDATE Activities 
+            SET
+                IsDeleted = 1
+            WHERE Id = @ActivityId
+        ",
+        parameters);
+    }
+
+    public async Task<IEnumerable<Activity>> GetActivitiesAfterDate(DateTime startDate, PaginationOptions paginationOptions)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add("SkippedItems", paginationOptions.Size * paginationOptions.Page);
+        parameters.Add("Size", paginationOptions.Size);
+        parameters.Add("StartDate", startDate, System.Data.DbType.DateTime2, precision: 7);
+        using var connection = new SqlConnection(_connectionString);
         var result = await connection.QueryAsync<Activity>(@"
             SELECT 
                 Id,
@@ -69,9 +83,78 @@ internal class ActivitiesAccess : IActivitiesAccess
                 TicketPrice, 
                 Capacity, 
                 Available, 
-                ImageUrl
+                ImageUrl,
+                IsDeleted
             FROM Activities 
-            WHERE ScheduledDateTime BETWEEN @StartDate AND @EndDate
+            WHERE 
+                ScheduledDateTime > @StartDate
+            AND
+                IsDeleted = 0
+            ORDER BY ScheduledDateTime ASC 
+            OFFSET @SkippedItems ROWS 
+            FETCH NEXT @Size ROWS ONLY
+        ",
+        parameters);
+        return result;
+    }
+
+    public async Task<IEnumerable<Activity>> GetActivitiesBeforeDate(DateTime startDate, PaginationOptions paginationOptions)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add("SkippedItems", paginationOptions.Size * paginationOptions.Page);
+        parameters.Add("Size", paginationOptions.Size);
+        parameters.Add("StartDate", startDate, System.Data.DbType.DateTime2, precision: 7);
+        using var connection = new SqlConnection(_connectionString);
+        var result = await connection.QueryAsync<Activity>(@"
+            SELECT 
+                Id,
+                Name, 
+                Details, 
+                ScheduledDateTime, 
+                Place, 
+                TicketPrice, 
+                Capacity, 
+                Available, 
+                ImageUrl,
+                IsDeleted
+            FROM Activities 
+            WHERE 
+                ScheduledDateTime < @StartDate
+            AND
+                IsDeleted = 0
+            ORDER BY ScheduledDateTime DESC 
+            OFFSET @SkippedItems ROWS 
+            FETCH NEXT @Size ROWS ONLY
+        ",
+        parameters);
+        return result;
+    }
+
+    public async Task<IEnumerable<Activity>> GetActivitiesInDateRange(GetActivitiesInDateRangeRequest getActivitiesInDateRangeRequest)
+    {
+        var parameters = new DynamicParameters();
+        parameters.Add("SkippedItems", getActivitiesInDateRangeRequest.PaginationOptions.Size * getActivitiesInDateRangeRequest.PaginationOptions.Page);
+        parameters.Add("Size", getActivitiesInDateRangeRequest.PaginationOptions.Size);
+        parameters.Add("StartDate", getActivitiesInDateRangeRequest.StartDateTime, System.Data.DbType.DateTime2, precision: 7);
+        parameters.Add("EndDate", getActivitiesInDateRangeRequest.EndDateTime, System.Data.DbType.DateTime2, precision: 7);
+        using var connection = new SqlConnection(_connectionString);
+        var result = await connection.QueryAsync<Activity>(@"
+            SELECT 
+                Id,
+                Name, 
+                Details, 
+                ScheduledDateTime, 
+                Place, 
+                TicketPrice, 
+                Capacity, 
+                Available, 
+                ImageUrl,
+                IsDeleted
+            FROM Activities 
+            WHERE 
+                ScheduledDateTime BETWEEN @StartDate AND @EndDate
+            AND
+                IsDeleted = 0
             ORDER BY ScheduledDateTime ASC 
             OFFSET @SkippedItems ROWS 
             FETCH NEXT @Size ROWS ONLY
@@ -82,11 +165,11 @@ internal class ActivitiesAccess : IActivitiesAccess
 
     public async Task<Activity> GetActivity(int activityId)
     {
-        using var connection = new SqlConnection(_connectionString);
         var parameters = new
         {
-            activityId = activityId
+            ActivityId = activityId
         };
+        using var connection = new SqlConnection(_connectionString);
         var result = await connection.QuerySingleAsync<Activity>(@"
             SELECT 
                 Id,
@@ -97,7 +180,8 @@ internal class ActivitiesAccess : IActivitiesAccess
                 TicketPrice, 
                 Capacity, 
                 Available, 
-                ImageUrl            
+                ImageUrl,
+                IsDeleted
             FROM Activities WHERE Id = @ActivityId",
             parameters);
         return result;

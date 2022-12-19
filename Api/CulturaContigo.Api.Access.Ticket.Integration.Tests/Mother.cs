@@ -9,9 +9,12 @@ internal class Mother
 {
     private readonly ActivityMother _activityMother;
 
+    private readonly IList<int> _activitiesToDelete;
+
     public Mother()
     {
         _activityMother = new ActivityMother();
+        _activitiesToDelete = new List<int>();
     }
 
     public TicketCreateRequest TicketCreateRequest(int activityId, int numberOfTickets = 1) => new()
@@ -21,6 +24,14 @@ internal class Mother
         PersonalId = "11111111111",
         TypeOfId = "cc"
     };
+
+    internal void AddActivitiesForCleanUp(params int[] activityIds)
+    {
+        foreach (int activityId in activityIds)
+        {
+            _activitiesToDelete.Add(activityId);
+        }
+    }
 
     internal ITicketAccess CreateTicketAccess()
     {
@@ -32,5 +43,13 @@ internal class Mother
     {
         var result = await _activityMother.CreateActivity();
         return result;
+    }
+
+    internal async Task DeleteActivitiesForCleanUp()
+    {
+        foreach (var activityId in _activitiesToDelete)
+        {
+            await _activityMother.DeleteActivity(activityId);
+        }
     }
 }

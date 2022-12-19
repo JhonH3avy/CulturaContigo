@@ -21,6 +21,12 @@ public class ActivitiesAccessTests
         _sut = _mother.CreateActivitiesAccess();
     }
 
+    [TearDown]
+    public async Task TearDown()
+    {
+        await _mother.DeleteActivitiesForCleanUp();
+    }
+
     [Test]
     public async Task ShouldCreateActivity()
     {
@@ -39,13 +45,16 @@ public class ActivitiesAccessTests
             Assert.That(actual.TicketPrice, Is.EqualTo(activityCreateRequest.TicketPrice));
             Assert.That(actual.ScheduledDateTime, Is.EqualTo(activityCreateRequest.ScheduledDateTime));
             Assert.That(actual.Place, Is.EqualTo(activityCreateRequest.Place));
+            Assert.That(actual.IsDeleted, Is.False);
         });
+
+        _mother.AddActivitiesForCleanUp(actual.Id);
     }
 
     [Test]
     public async Task ShouldGetActivity()
     {
-        var expectedActivity = await _mother.CreateActivity();
+        var expectedActivity = await _mother.CreateActivity(null);
 
         var actual = await _sut.GetActivity(expectedActivity.Id);
         
@@ -60,17 +69,20 @@ public class ActivitiesAccessTests
             Assert.That(actual.TicketPrice, Is.EqualTo(expectedActivity.TicketPrice));
             Assert.That(actual.ScheduledDateTime, Is.EqualTo(expectedActivity.ScheduledDateTime));
             Assert.That(actual.Place, Is.EqualTo(expectedActivity.Place));
+            Assert.That(actual.IsDeleted, Is.False);
         });
+
+        _mother.AddActivitiesForCleanUp(actual.Id);
     }
 
     [Test]
     public async Task ShouldGetActivitiesInDateRange()
     {
         var startDate = DateTime.UtcNow;
-        var activity1 = await _mother.CreateActivity();
-        var activity2 = await _mother.CreateActivity();
-        var activity3 = await _mother.CreateActivity();
-        var activity4 = await _mother.CreateActivity();
+        var activity1 = await _mother.CreateActivity(null);
+        var activity2 = await _mother.CreateActivity(null);
+        var activity3 = await _mother.CreateActivity(null);
+        var activity4 = await _mother.CreateActivity(null);
         var endDate = DateTime.UtcNow;
         var expectedActivitiesIds = new[] { activity1.Id, activity2.Id, activity3.Id, activity4.Id };
         var getActivitiesInDateRangeRequest = _mother.GetActivitiesInDateRangeRequest(startDate, endDate);
@@ -79,5 +91,60 @@ public class ActivitiesAccessTests
 
         Assert.That(actual, Has.Exactly(4).Items);
         Assert.That(actual.Select(x => x.Id), Is.EquivalentTo(expectedActivitiesIds));
+
+        _mother.AddActivitiesForCleanUp(expectedActivitiesIds);
+    }
+
+    [Test]
+    public async Task ShouldGetActivitiesAfterDate()
+    {
+        var startDate = DateTime.UtcNow;
+        var scheduledDateTime = startDate.AddSeconds(1);
+        var activities = await _mother.CreateMultipleActivities(scheduledDateTime);
+        var paginationOptions = _mother.PaginationOptions;
+        var expectedActivitiesIds = activities
+            .OrderBy(x => x.ScheduledDateTime)
+            .Select(x => x.Id)
+            .Skip(paginationOptions.Size * paginationOptions.Page)
+            .Take(paginationOptions.Size)
+            .ToArray();
+
+        var actual = await _sut.GetActivitiesAfterDate(startDate, paginationOptions);
+
+        Assert.That(actual.Select(x => x.Id), Is.EqualTo(expectedActivitiesIds));
+
+        _mother.AddActivitiesForCleanUp(expectedActivitiesIds);
+    }
+
+    [Test]
+    public async Task ShouldDeleteActivity()
+    {
+        var activity = await _mother.CreateActivity(null);
+
+        await _sut.DeleteActivity(activity.Id);
+
+        var actualActivity = await _sut.GetActivity(activity.Id);
+        Assert.That(actualActivity.IsDeleted, Is.True);
+    }
+
+    [Test]
+    public async Task ShouldGetActivitiesBeforeDate()
+    {
+        var startDate = DateTime.UtcNow;
+        var scheduledDateTime = startDate.AddMilliseconds(-1);
+        var activities = await _mother.CreateMultipleActivities(scheduledDateTime);
+        var paginationOptions = _mother.PaginationOptions;
+        var expectedActivitiesIds = activities
+            .OrderByDescending(x => x.ScheduledDateTime)
+            .Select(x => x.Id)
+            .Skip(paginationOptions.Size * paginationOptions.Page)
+            .Take(paginationOptions.Size)
+            .ToArray();
+
+        var actual = await _sut.GetActivitiesBeforeDate(startDate, paginationOptions);
+
+        Assert.That(actual.Select(x => x.Id), Is.SupersetOf(expectedActivitiesIds));
+
+        _mother.AddActivitiesForCleanUp(expectedActivitiesIds);
     }
 }

@@ -36,5 +36,7 @@ public class TicketAccessTests
             Assert.That(actual.ActivityId, Is.EqualTo(ticketCreateRequest.ActivityId));
             Assert.That(actual.NumberOfTickets, Is.EqualTo(ticketCreateRequest.NumberOfTickets));
         });
+
+        _mother.AddActivitiesForCleanUp(activity.Id);
     }
 }

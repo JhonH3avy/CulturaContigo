@@ -23,9 +23,15 @@ internal class ActivityMother
         TicketPrice = 10_000m
     };
 
-    public async Task<Activity> CreateActivity()
+    public async Task<Activity> CreateActivity(ActivityCreateRequest? activityCreateRequest = null)
     {
-        var result = await _activitiesAccess.CreateActivity(ActivityCreateRequest);
+        var request = activityCreateRequest ?? ActivityCreateRequest;
+        var result = await _activitiesAccess.CreateActivity(request);
         return result;
+    }
+
+    public async Task DeleteActivity(int activityId)
+    {
+        await _activitiesAccess.DeleteActivity(activityId);
     }
 }
