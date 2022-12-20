@@ -28,6 +28,12 @@ internal class Mother
         TicketPrice = 10_000m
     };
 
+    public Contract.PaginationOptions AdministrationModelPaginationOptions => new()
+    {
+        Page = 100,
+        Size = 1000
+    };
+
     internal IMapper CreateMapper()
     {
         var configurationExpression = new MapperConfigurationExpression();

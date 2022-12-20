@@ -58,4 +58,18 @@ public class MappingProfileTests
             Assert.That(actual.TicketPrice, Is.EqualTo(request.TicketPrice));
         });
     }
+
+    [Test]
+    public void ShouldMapAdmnistrationManagerPaginationOptionToAccessPaginationOptions()
+    {
+        var request = _mother.AdministrationModelPaginationOptions;
+
+        var actual = _sut.Map<Access.Activities.Contract.PaginationOptions>(request);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(actual.Size, Is.EqualTo(request.Size));
+            Assert.That(actual.Page, Is.EqualTo(request.Page));
+        });
+    }
 }

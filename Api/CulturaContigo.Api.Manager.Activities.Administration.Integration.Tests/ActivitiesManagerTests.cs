@@ -36,4 +36,32 @@ public class ActivitiesManagerTests
             Assert.That(actual.Place, Is.EqualTo(activityCreateRequest.Place));
         });
     }
+
+    [Test]
+    public async Task ShouldGetActivitiesAfterDate()
+    {
+        var startDate = DateTime.UtcNow;
+        var activityCreateRequest = _mother.ActivityCreateRequest;
+        activityCreateRequest.ScheduledDateTime = startDate.AddMilliseconds(1);
+        var activities = await _mother.CreateMultipleActivities(activityCreateRequest);
+        var paginationOptions = _mother.PaginationOptions;
+
+        var actual = await _sut.GetActivitiesAfterDate(startDate, paginationOptions);
+
+        Assert.That(actual.Select(x => x.Id), Is.SubsetOf(activities.Select(x => x.Id)));
+    }
+
+    [Test]
+    public async Task ShouldGetActivitiesBeforeDate()
+    {
+        var startDate = DateTime.UtcNow;
+        var activityCreateRequest = _mother.ActivityCreateRequest;
+        activityCreateRequest.ScheduledDateTime = startDate.AddMilliseconds(-1);
+        var activities = await _mother.CreateMultipleActivities(activityCreateRequest);
+        var paginationOptions = _mother.PaginationOptions;
+
+        var actual = await _sut.GetActivitiesBeforeDate(startDate, paginationOptions);
+
+        Assert.That(actual.Select(x => x.Id), Is.SubsetOf(activities.Select(x => x.Id)));
+    }
 }

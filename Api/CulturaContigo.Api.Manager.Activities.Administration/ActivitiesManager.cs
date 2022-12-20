@@ -22,4 +22,20 @@ internal class ActivitiesManager : IActivitiesManager
         var result = _mapper.Map<Contract.Activity>(accessActivity);
         return result;
     }
+
+    public async Task<IEnumerable<Contract.Activity>> GetActivitiesAfterDate(DateTime startDate, Contract.PaginationOptions paginationOptions)
+    {
+        var accessPaginationOptions = _mapper.Map<Access.Activities.Contract.PaginationOptions>(paginationOptions);
+        var accessActivities = await _activitiesAccess.GetActivitiesAfterDate(startDate, accessPaginationOptions);
+        var result = _mapper.Map<IEnumerable<Contract.Activity>>(accessActivities);
+        return result;
+    }
+
+    public async Task<IEnumerable<Contract.Activity>> GetActivitiesBeforeDate(DateTime startDate, Contract.PaginationOptions paginationOptions)
+    {
+        var accessPaginationOptions = _mapper.Map<Access.Activities.Contract.PaginationOptions>(paginationOptions);
+        var accessActivities = await _activitiesAccess.GetActivitiesBeforeDate(startDate, accessPaginationOptions);
+        var result = _mapper.Map<IEnumerable<Contract.Activity>>(accessActivities);
+        return result;
+    }
 }

@@ -45,4 +45,56 @@ public class ActivitiesManagerTests
 
         _mockRepository.VerifyAll();
     }
+
+    [Test]
+    public async Task ShouldGetActivitiesAfterDate()
+    {
+        var startDate = DateTime.UtcNow;
+        var accessPaginationOptions = new Access.Activities.Contract.PaginationOptions();
+        var paginationOptions = new Contract.PaginationOptions();
+        var accessActivities = new[] { new Access.Activities.Contract.Activity() };
+        var expectedActivities = new[] { new Contract.Activity { Id = 1 } };
+
+        _mapper
+            .Setup(x => x.Map<Access.Activities.Contract.PaginationOptions>(paginationOptions))
+            .Returns(accessPaginationOptions);
+        _activitiesAccess
+            .Setup(x => x.GetActivitiesAfterDate(startDate, accessPaginationOptions))
+            .ReturnsAsync(accessActivities);
+        _mapper
+            .Setup(x => x.Map<IEnumerable<Contract.Activity>>(accessActivities))
+            .Returns(expectedActivities);
+
+        var actual = await _sut.GetActivitiesAfterDate(startDate, paginationOptions);
+
+        Assert.That(actual, Is.EqualTo(expectedActivities));
+
+        _mockRepository.VerifyAll();
+    }
+
+    [Test]
+    public async Task ShouldGetActivitiesBeforeDate()
+    {
+        var startDate = DateTime.UtcNow;
+        var accessPaginationOptions = new Access.Activities.Contract.PaginationOptions();
+        var paginationOptions = new Contract.PaginationOptions();
+        var accessActivities = new[] { new Access.Activities.Contract.Activity() };
+        var expectedActivities = new[] { new Contract.Activity { Id = 1 } };
+
+        _mapper
+            .Setup(x => x.Map<Access.Activities.Contract.PaginationOptions>(paginationOptions))
+            .Returns(accessPaginationOptions);
+        _activitiesAccess
+            .Setup(x => x.GetActivitiesBeforeDate(startDate, accessPaginationOptions))
+            .ReturnsAsync(accessActivities);
+        _mapper
+            .Setup(x => x.Map<IEnumerable<Contract.Activity>>(accessActivities))
+            .Returns(expectedActivities);
+
+        var actual = await _sut.GetActivitiesBeforeDate(startDate, paginationOptions);
+
+        Assert.That(actual, Is.EqualTo(expectedActivities));
+
+        _mockRepository.VerifyAll();
+    }
 }

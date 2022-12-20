@@ -16,10 +16,11 @@ internal class ActivityMother
         TicketPrice = 10_000m
     };
 
-    internal async Task<Activity> CreateActivity()
+    internal async Task<Activity> CreateActivity(ActivityCreateRequest? activityCreateRequest)
     {
         var activitiesManager = ManagerDependencyBuilder.CreateAdministrationActivitiesManager();
-        var result = await activitiesManager.CreateActivity(ActivityCreateRequest);
+        var request = activityCreateRequest ?? ActivityCreateRequest;
+        var result = await activitiesManager.CreateActivity(request);
         return result;
     }
 }

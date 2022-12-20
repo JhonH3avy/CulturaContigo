@@ -15,9 +15,26 @@ internal class Mother
 
     public ActivityCreateRequest ActivityCreateRequest => _activityMother.ActivityCreateRequest;
 
+    public PaginationOptions PaginationOptions => new()
+    {
+        Size = 10,
+        Page = 0
+    };
+
     internal IActivitiesManager CreateActivitiesManager()
     {
         var result = ManagerDependencyBuilder.CreateAdministrationActivitiesManager();
+        return result;
+    }
+
+    internal async Task<IEnumerable<Activity>> CreateMultipleActivities(ActivityCreateRequest? activityCreateRequest = null, int amountOfActivities = 20)
+    {
+        var result = new List<Activity>();
+        for (var i = 0; i < amountOfActivities; i++)
+        {
+            var activity = await _activityMother.CreateActivity(activityCreateRequest);
+            result.Add(activity);
+        }
         return result;
     }
 }

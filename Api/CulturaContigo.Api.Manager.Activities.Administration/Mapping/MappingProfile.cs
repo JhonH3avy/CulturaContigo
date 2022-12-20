@@ -9,5 +9,7 @@ internal class MappingProfile : Profile
 		CreateMap<Contract.ActivityCreateRequest, Access.Activities.Contract.ActivityCreateRequest>();
 
 		CreateMap<Access.Activities.Contract.Activity, Contract.Activity>();
+
+		CreateMap<Contract.PaginationOptions,Access.Activities.Contract.PaginationOptions>();
 	}
 }
