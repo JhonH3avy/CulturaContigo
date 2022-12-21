@@ -5,11 +5,11 @@ namespace CulturaContigo.Api.Models;
 public record TicketCreateRequest
 {
     [Required]
-    public int ActivityId { get; set; }
+    public int ActivityId { get; init; }
     [Required]
-    public string? TypeOfId { get; set; }
+    public string? TypeOfId { get; init; }
     [Required]
-    public string? PersonalId { get; set; }
+    public string? PersonalId { get; init; }
     [Required]
-    public int NumberOfTickets { get; set; }
+    public int NumberOfTickets { get; init; }
 }

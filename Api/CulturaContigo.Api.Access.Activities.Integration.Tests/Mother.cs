@@ -56,8 +56,7 @@ internal class Mother
         var result = new List<Activity>();
         for (var i = 0; i < activitiesCount; i++)
         {
-            var request = _activityMother.ActivityCreateRequest;
-            request.ScheduledDateTime = scheduledDateTime;
+            var request = _activityMother.ActivityCreateRequest with { ScheduledDateTime = scheduledDateTime };
             var activity = await CreateActivity(request);
             result.Add(activity);
         }

@@ -5,12 +5,12 @@ namespace CulturaContigo.Api.Models.Administration;
 public record ActivityCreateRequest
 {
     [Required]
-    public string? Name { get; set; }
+    public string? Name { get; init; }
     [Required]
-    public string? Details { get; set; }
-    public DateTime? ScheduledDateTime { get; set; }
-    public string? Place { get; set; }
-    public decimal? TicketPrice { get; set; }
-    public int? Capacity { get; set; }
-    public string? ImageUrl { get; set; }
+    public string? Details { get; init; }
+    public DateTime? ScheduledDateTime { get; init; }
+    public string? Place { get; init; }
+    public decimal? TicketPrice { get; init; }
+    public int? Capacity { get; init; }
+    public string? ImageUrl { get; init; }
 }

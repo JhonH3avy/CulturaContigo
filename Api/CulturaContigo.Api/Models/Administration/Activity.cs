@@ -2,13 +2,13 @@
 
 public record Activity
 {
-    public int Id { get; set; }
-    required public string Name { get; set; }
-    required public string Details { get; set; }
-    public DateTime? ScheduledDateTime { get; set; }
-    public string? Place { get; set; }
-    public decimal? TicketPrice { get; set; }
-    public int? Capacity { get; set; }
-    public int? Available { get; set; }
-    public string? ImageUrl { get; set; }
+    public int Id { get; init; }
+    required public string Name { get; init; }
+    required public string Details { get; init; }
+    public DateTime? ScheduledDateTime { get; init; }
+    public string? Place { get; init; }
+    public decimal? TicketPrice { get; init; }
+    public int? Capacity { get; init; }
+    public int? Available { get; init; }
+    public string? ImageUrl { get; init; }
 }

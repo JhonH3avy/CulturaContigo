@@ -41,8 +41,7 @@ public class ActivitiesManagerTests
     public async Task ShouldGetActivitiesAfterDate()
     {
         var startDate = DateTime.UtcNow;
-        var activityCreateRequest = _mother.ActivityCreateRequest;
-        activityCreateRequest.ScheduledDateTime = startDate.AddMilliseconds(1);
+        var activityCreateRequest = _mother.ActivityCreateRequest with { ScheduledDateTime = startDate.AddMilliseconds(1) };
         var activities = await _mother.CreateMultipleActivities(activityCreateRequest);
         var paginationOptions = _mother.PaginationOptions;
 
@@ -55,8 +54,7 @@ public class ActivitiesManagerTests
     public async Task ShouldGetActivitiesBeforeDate()
     {
         var startDate = DateTime.UtcNow;
-        var activityCreateRequest = _mother.ActivityCreateRequest;
-        activityCreateRequest.ScheduledDateTime = startDate.AddMilliseconds(-1);
+        var activityCreateRequest = _mother.ActivityCreateRequest with { ScheduledDateTime = startDate.AddMilliseconds(-1) };
         var activities = await _mother.CreateMultipleActivities(activityCreateRequest);
         var paginationOptions = _mother.PaginationOptions;
 

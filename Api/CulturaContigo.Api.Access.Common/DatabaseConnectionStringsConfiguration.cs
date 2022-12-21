@@ -3,5 +3,5 @@ public class DatabaseConnectionStringsConfiguration
 {
     public const string ConnectionStringName = "CulturaContigo.Db";
 
-    public string? CulturaContigo { get; set; }
+    public string? CulturaContigo { get; init; }
 }

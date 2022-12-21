@@ -2,8 +2,8 @@
 
 public record TicketCreateRequest
 {
-    public int ActivityId { get; set; }
-    required public string TypeOfId { get; set; }
-    required public string PersonalId { get; set; }
-    public int NumberOfTickets { get; set; }
+    public int ActivityId { get; init; }
+    required public string TypeOfId { get; init; }
+    required public string PersonalId { get; init; }
+    public int NumberOfTickets { get; init; }
 }
