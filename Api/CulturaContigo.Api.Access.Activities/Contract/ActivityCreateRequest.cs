@@ -2,14 +2,8 @@
 
 public record ActivityCreateRequest
 {
-    public ActivityCreateRequest()
-    {
-        Name = string.Empty;
-        Details = string.Empty;
-    }
-
-    public string Name { get; set; }
-    public string Details { get; set; }
+    required public string Name { get; set; }
+    required public string Details { get; set; }
     public DateTime? ScheduledDateTime { get; set; }
     public string? Place { get; set; }
     public decimal? TicketPrice { get; set; }

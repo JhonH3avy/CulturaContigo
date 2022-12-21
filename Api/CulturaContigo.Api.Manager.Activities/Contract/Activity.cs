@@ -2,15 +2,9 @@
 
 public record Activity
 {
-    public Activity()
-    {
-        Name = string.Empty;
-        Details = string.Empty;
-    }
-
     public int Id { get; set; }
-    public string Name { get; set; }
-    public string Details { get; set; }
+    required public string Name { get; set; }
+    required public string Details { get; set; }
     public DateTime? ScheduledDateTime { get; set; }
     public string? Place { get; set; }
     public decimal? TicketPrice { get; set; }

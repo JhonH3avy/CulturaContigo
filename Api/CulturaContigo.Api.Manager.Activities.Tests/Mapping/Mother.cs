@@ -5,16 +5,6 @@ namespace CulturaContigo.Api.Manager.Activities.Tests.Mapping;
 
 internal class Mother
 {
-    public Manager.Activities.Contract.ActivityCreateRequest ManagerActivityCreateRequest => new()
-    {
-        Name = "name",
-        Details = "details",
-        Capacity = 100,
-        ImageUrl = "imageUrl",
-        Place = "place",
-        ScheduledDateTime = DateTime.UtcNow,
-        TicketPrice = 10_000m
-    };
 
     public Access.Activities.Contract.Activity AccessActivity => new()
     {
@@ -30,6 +20,7 @@ internal class Mother
 
     public Manager.Activities.Contract.GetActivitiesInDateRangeRequest ManagerGetActivitiesInDateRangeRequest => new()
     {
+        PaginationOptions = ManagerPaginationOptions,
         EndDateTime = DateTime.UtcNow,
         StartDateTime = DateTime.UtcNow
     };

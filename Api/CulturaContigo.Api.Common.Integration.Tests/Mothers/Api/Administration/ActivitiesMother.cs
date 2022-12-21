@@ -19,7 +19,7 @@ internal class ActivitiesMother
         TicketPrice = 10_000m
     };
 
-    internal async Task<Models.Activity> CreateActivity(ActivityCreateRequest? request = null)
+    internal async Task<Models.Administration.Activity> CreateActivity(ActivityCreateRequest? request = null)
     {
         var administrationActivitiesController = CreateAdministrationActivitiesController();
         var activityCreateRequest = request ?? ActivityCreateRequest;

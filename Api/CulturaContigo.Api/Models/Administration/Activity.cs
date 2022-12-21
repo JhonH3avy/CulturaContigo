@@ -1,4 +1,4 @@
-﻿namespace CulturaContigo.Api.Manager.Activities.Administration.Contract;
+﻿namespace CulturaContigo.Api.Models.Administration;
 
 public record Activity
 {

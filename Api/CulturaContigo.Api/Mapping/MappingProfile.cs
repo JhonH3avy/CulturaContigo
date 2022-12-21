@@ -7,13 +7,11 @@ internal class MappingProfile : Profile
 {
 	public MappingProfile()
 	{
-		CreateMap<ActivityCreateRequest, Manager.Activities.Contract.ActivityCreateRequest>();
-
 		CreateMap<Manager.Activities.Contract.Activity, Models.Activity>();
 
         CreateMap<ActivityCreateRequest, Manager.Activities.Administration.Contract.ActivityCreateRequest>();
 
-        CreateMap<Manager.Activities.Administration.Contract.Activity, Models.Activity>();
+        CreateMap<Manager.Activities.Administration.Contract.Activity, Models.Administration.Activity>();
 
         CreateMap<Models.PaginationOptions, Manager.Activities.Contract.PaginationOptions>();
 

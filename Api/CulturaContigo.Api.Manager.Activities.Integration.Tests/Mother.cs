@@ -34,7 +34,7 @@ internal class Mother
 
     internal async Task<Administration.Contract.Activity> CreateActivity()
     {
-        var result = await _activityMother.CreateActivity();
+        var result = await _activityMother.CreateActivity(null);
         return result;
     }
 }

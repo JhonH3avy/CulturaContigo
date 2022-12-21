@@ -11,6 +11,13 @@ public class ActivitiesManagerTests
     private MockRepository _mockRepository;
     private Mock<IMapper> _mapper;
     private Mock<IActivitiesAccess> _activitiesAccess;
+    private Mother _mother;
+
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {
+        _mother = new Mother();
+    }
 
     [SetUp]
     public void Setup()
@@ -26,8 +33,8 @@ public class ActivitiesManagerTests
     {
         const int activityId = 1;
 
-        var accessActivity = new Access.Activities.Contract.Activity();
-        var expectedActivity = new Manager.Activities.Contract.Activity { Id = activityId };
+        var accessActivity = _mother.AccessActivity;
+        var expectedActivity = _mother.ManagerActivity with { Id = activityId };
 
         _activitiesAccess
             .Setup(x => x.GetActivity(activityId))
@@ -46,10 +53,10 @@ public class ActivitiesManagerTests
     [Test]
     public async Task ShouldGetActivitiesInDateRange()
     {
-        var accessActivities = new[] { new Access.Activities.Contract.Activity() };
-        var expectedActivities = new[] { new Manager.Activities.Contract.Activity { Id = 1 } };
-        var getActivitiesInDateRangeRequest = new Manager.Activities.Contract.GetActivitiesInDateRangeRequest();
-        var accessGetAcvtivitiesInDateRangeRequest = new Access.Activities.Contract.GetActivitiesInDateRangeRequest();
+        var accessActivities = new[] { _mother.AccessActivity };
+        var expectedActivities = new[] { _mother.ManagerActivity with { Id = 1 } };
+        var getActivitiesInDateRangeRequest = _mother.ManagerGetActivitiesInDateRangeRequest;
+        var accessGetAcvtivitiesInDateRangeRequest = _mother.AccessGetActivitiesInDateRangeRequest;
 
         _mapper
             .Setup(x => x.Map<Access.Activities.Contract.GetActivitiesInDateRangeRequest>(getActivitiesInDateRangeRequest))

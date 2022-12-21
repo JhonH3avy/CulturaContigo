@@ -11,6 +11,13 @@ public class ActivitiesManagerTests
     private MockRepository _mockRepository;
     private Mock<IMapper> _mapper;
     private Mock<IActivitiesAccess> _activitiesAccess;
+    private Mother _mother;
+
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {
+        _mother = new Mother();
+    }
 
     [SetUp]
     public void SetUp()
@@ -24,10 +31,10 @@ public class ActivitiesManagerTests
     [Test]
     public async Task ShouldCreateActivity()
     {
-        var activityCreateRequest = new Contract.ActivityCreateRequest();
-        var accessActivityCreateRequest = new Access.Activities.Contract.ActivityCreateRequest();
-        var accessActivity = new Access.Activities.Contract.Activity();
-        var expectedActivity = new Contract.Activity { Id = 1 };
+        var activityCreateRequest = _mother.AdministrationManagerActivityCreateRequest;
+        var accessActivityCreateRequest = _mother.AccessActivityCreateRequest;
+        var accessActivity = _mother.AccessActivity;
+        var expectedActivity = _mother.AdministrationManagerActivity with { Id = 1 };
 
         _mapper
             .Setup(x => x.Map<Access.Activities.Contract.ActivityCreateRequest>(activityCreateRequest))
@@ -52,8 +59,8 @@ public class ActivitiesManagerTests
         var startDate = DateTime.UtcNow;
         var accessPaginationOptions = new Access.Activities.Contract.PaginationOptions();
         var paginationOptions = new Contract.PaginationOptions();
-        var accessActivities = new[] { new Access.Activities.Contract.Activity() };
-        var expectedActivities = new[] { new Contract.Activity { Id = 1 } };
+        var accessActivities = new[] { _mother.AccessActivity };
+        var expectedActivities = new[] { _mother.AdministrationManagerActivity with { Id = 1 } };
 
         _mapper
             .Setup(x => x.Map<Access.Activities.Contract.PaginationOptions>(paginationOptions))
@@ -78,8 +85,8 @@ public class ActivitiesManagerTests
         var startDate = DateTime.UtcNow;
         var accessPaginationOptions = new Access.Activities.Contract.PaginationOptions();
         var paginationOptions = new Contract.PaginationOptions();
-        var accessActivities = new[] { new Access.Activities.Contract.Activity() };
-        var expectedActivities = new[] { new Contract.Activity { Id = 1 } };
+        var accessActivities = new[] { _mother.AccessActivity };
+        var expectedActivities = new[] { _mother.AdministrationManagerActivity with { Id = 1 } };
 
         _mapper
             .Setup(x => x.Map<Access.Activities.Contract.PaginationOptions>(paginationOptions))

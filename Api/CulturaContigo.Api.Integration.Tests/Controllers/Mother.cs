@@ -32,7 +32,7 @@ internal class Mother
         return result;
     }
 
-    internal async Task<Activity> CreateActivity(ActivityCreateRequest? activityCreateRequest = null)
+    internal async Task<Models.Administration.Activity> CreateActivity(ActivityCreateRequest? activityCreateRequest = null)
     {
         var result = await _administrationActivitiesMother.CreateActivity(activityCreateRequest);
         return result;

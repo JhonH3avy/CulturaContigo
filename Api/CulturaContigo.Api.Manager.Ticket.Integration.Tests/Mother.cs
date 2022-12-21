@@ -16,7 +16,7 @@ internal class Mother
 
     internal Task<Activity> CreateActivity()
     {
-        var result = _activityMother.CreateActivity();
+        var result = _activityMother.CreateActivity(null);
         return result;
     }
 

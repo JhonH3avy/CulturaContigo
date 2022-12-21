@@ -11,6 +11,13 @@ public class TicketManagerTests
     private MockRepository _mockRepository;
     private Mock<IMapper> _mapper;
     private Mock<ITicketAccess> _ticketAccess;
+    private Mother _mother;
+
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {
+        _mother = new Mother();
+    }
 
     [SetUp]
     public void SetUp()
@@ -24,10 +31,10 @@ public class TicketManagerTests
     [Test]
     public async Task ShouldCreateTicket()
     {
-        var ticketCreateRequest = new Contract.TicketCreateRequest();
-        var accessTicketCreateRequest = new Access.Ticket.Contract.TicketCreateRequest();
-        var accessTicket = new Access.Ticket.Contract.Ticket();
-        var expectedTicket = new Contract.Ticket();
+        var ticketCreateRequest = _mother.ManagerTicketCreateRequest;
+        var accessTicketCreateRequest = _mother.AccessTicketCreateRequest;
+        var accessTicket = _mother.AccessTicket;
+        var expectedTicket = _mother.ManagerTicket;
 
         _mapper
             .Setup(x => x.Map<Access.Ticket.Contract.TicketCreateRequest>(ticketCreateRequest))

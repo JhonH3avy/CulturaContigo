@@ -11,6 +11,13 @@ internal class ActivitiesControllerTests
     private MockRepository _mockRepository;
     private Mock<IActivitiesManager> _activitiesManager;
     private Mock<IMapper> _mapper;
+    private Mother _mother;
+
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {
+        _mother = new Mother();
+    }
 
     [SetUp]
     public void SetUp()
@@ -25,8 +32,8 @@ internal class ActivitiesControllerTests
     public async Task ShouldGet()
     {
         const int activityId = 1;
-        var managerActivity = new Manager.Activities.Contract.Activity();
-        var expectedActivity = new Models.Activity { Id = activityId };
+        var managerActivity = _mother.ManagerActivity;
+        var expectedActivity = _mother.ModelActivity with { Id = activityId };
 
         _activitiesManager
             .Setup(x => x.GetActivity(activityId))
@@ -49,8 +56,8 @@ internal class ActivitiesControllerTests
         var endDateTime = DateTime.UtcNow.AddDays(7);
         var paginationOptions = new Models.PaginationOptions();
         var managerPaginationOptions = new PaginationOptions();
-        var managerActivities = new[] { new Manager.Activities.Contract.Activity { Id = 1 } };
-        var expectedActivities = new[] { new Models.Activity { Id = 1 } };
+        var managerActivities = new[] { _mother.ManagerActivity with { Id = 1 } };
+        var expectedActivities = new[] { _mother.ModelActivity with { Id = 1 } };
 
         _mapper
             .Setup(x => x.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions))
@@ -79,8 +86,8 @@ internal class ActivitiesControllerTests
         var endDateTime = DateTime.UtcNow.AddMonths(1);
         var paginationOptions = new Models.PaginationOptions();
         var managerPaginationOptions = new PaginationOptions();
-        var managerActivities = new[] { new Manager.Activities.Contract.Activity { Id = 1 } };
-        var expectedActivities = new[] { new Models.Activity { Id = 1 } };
+        var managerActivities = new[] { _mother.ManagerActivity with { Id = 1 } };
+        var expectedActivities = new[] { _mother.ModelActivity with { Id = 1 } };
 
         _mapper
             .Setup(x => x.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions))
@@ -109,8 +116,8 @@ internal class ActivitiesControllerTests
         var endDateTime = DateTime.UtcNow.AddYears(1);
         var paginationOptions = new Models.PaginationOptions();
         var managerPaginationOptions = new PaginationOptions();
-        var managerActivities = new[] { new Manager.Activities.Contract.Activity { Id = 1 } };
-        var expectedActivities = new[] { new Models.Activity { Id = 1 } };
+        var managerActivities = new[] { _mother.ManagerActivity with { Id = 1 } };
+        var expectedActivities = new[] { _mother.ModelActivity with { Id = 1 } };
 
         _mapper
             .Setup(x => x.Map<Manager.Activities.Contract.PaginationOptions>(paginationOptions))

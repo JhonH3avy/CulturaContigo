@@ -11,6 +11,13 @@ public class ActivitiesControllerTests
     private MockRepository _mockRepository;
     private Mock<IActivitiesManager> _activitiesManager;
     private Mock<IMapper> _mapper;
+    private Mother _mother;
+
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {
+        _mother = new Mother();
+    }
 
     [SetUp]
     public void SetUp()
@@ -24,10 +31,10 @@ public class ActivitiesControllerTests
     [Test]
     public async Task ShouldPost()
     {
-        var activityCreateRequest = new Models.Administration.ActivityCreateRequest();
-        var managerActivityCreateRequest = new ActivityCreateRequest();
-        var managerActivity = new Activity();
-        var expectedActivity = new Models.Activity { Id = 1 };
+        var activityCreateRequest = _mother.AdministrationModelActivityCreateRequest;
+        var managerActivityCreateRequest = _mother.AdministrationManagerActivityCreateRequest;
+        var managerActivity = _mother.AdministrationManagerActivity;
+        var expectedActivity = _mother.AdministrationModelActivity with { Id = 1 };
 
         _mapper
             .Setup(x => x.Map<ActivityCreateRequest>(activityCreateRequest))
@@ -36,7 +43,7 @@ public class ActivitiesControllerTests
             .Setup(x => x.CreateActivity(managerActivityCreateRequest))
             .ReturnsAsync(managerActivity);
         _mapper
-            .Setup(x => x.Map<Models.Activity>(managerActivity))
+            .Setup(x => x.Map<Models.Administration.Activity>(managerActivity))
             .Returns(expectedActivity);
 
         var actual = await _sut.Post(activityCreateRequest);

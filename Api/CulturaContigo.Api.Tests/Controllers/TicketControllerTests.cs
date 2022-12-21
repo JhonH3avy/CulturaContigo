@@ -11,6 +11,13 @@ public class TicketControllerTests
     private MockRepository _mockRepository;
     private Mock<IMapper> _mapper;
     private Mock<ITicketManager> _ticketManager;
+    private Mother _mother;
+
+    [OneTimeSetUp]
+    public void OneTimeSetUp()
+    {
+        _mother = new Mother();
+    }
 
     [SetUp]
     public void SetUp()
@@ -25,9 +32,9 @@ public class TicketControllerTests
     public async Task ShouldPost()
     {
         var ticketCreateRequest = new Models.TicketCreateRequest();
-        var managerTicketCreateRequest = new Manager.Ticket.Contract.TicketCreateRequest();
-        var managerTicket = new Manager.Ticket.Contract.Ticket();
-        var expectedTicket = new Models.Ticket { Id = 1 };
+        var managerTicketCreateRequest = _mother.ManagerTicketCreateRequest;
+        var managerTicket = _mother.ManagerTicket;
+        var expectedTicket = _mother.ModelTicket with { Id = 1 };
 
         _mapper
             .Setup(x => x.Map<Manager.Ticket.Contract.TicketCreateRequest>(ticketCreateRequest))
